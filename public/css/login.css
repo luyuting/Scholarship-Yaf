@@ -1,0 +1,49 @@
+@CHARSET "UTF-8";
+
+#login input, #login button, #login img {
+	display: block;
+}
+
+#login img {
+	margin: 5px auto;
+	border-radius: 50%;
+	width: 100px;
+	max-width: 25%;
+}
+
+#userid, #password {
+	width: calc(100% - 36px);
+	margin: 0 auto;
+}
+
+#login-button {
+	width: calc(100% - 10px);
+	margin: 20px auto 10px;
+}
+
+
+.login-title {
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+div.flex-box {
+	display: flex;
+	display: -webkit-flex;
+	max-width: calc(100% - 10px);
+	margin: 10px auto;
+}
+
+div.flex-box div {
+	-webkit-flex: 1;
+	flex: 1;
+}
+
+img.page-image {
+	display: block;
+	max-width: calc(100% - 10px);
+	border-radius: 7px;
+	margin: 0px auto;
+	-webkit-flex: 1;
+	flex: 1;
+}
