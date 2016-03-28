@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+
+.flex-box {
+	display: flex;
+	display: -webkit-flex;
+	margin: 8px auto;
+}
+
+.flex-box span {
+	-webkit-flex: 1;
+	flex: 1;
+	text-align: center;
+	padding: 5px 0;
+}
+
+.flex-box span:nth-child(1) {
+	font-weight: bold;
+	background: #c0c0c0;
+}
+
+.flex-box span:nth-child(2) {
+	background: #eaeaea;
+}
