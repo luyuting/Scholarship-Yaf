@@ -4,6 +4,8 @@
         // 检查是否登录，设置免登录页面
         protected $_no_login = [];
         
+        private $_login_user = null;
+        
         public function init() {
             if (empty($this->_no_login) || !in_array($this->getRequest()->getActionName(), $this->_no_login)) {
                 try {
@@ -14,15 +16,22 @@
             }
         }
         
-        // 应当区分管理员和普通用户
-        protected function loginValidate() {
+        private function loginValidate() {
             
             // validate, if not login, throw exception
+            session_start();
+            if (isset($_SESSION['sid'])) {
+                $this->_login_user = $_SESSION['sid'];
+                return;
+            }
+            
             if (!empty($_COOKIE['sid']) && !empty($_COOKIE['ltime'])) {
                 $det = explode('.', $_COOKIE['sid']);
                 if (count($det) == 2) {
                     $sid = base64_decode($det[1], true);
                     if ($det[0] == hash('sha256', $sid . $_COOKIE['ltime'])) {
+                        $_SESSION['sid'] = $sid;
+                        $this->_login_user = $sid;
                         return;
                     }
                 }
@@ -30,5 +39,19 @@
             }
             throw new Exception_NoLogin();
             
+        }
+        
+        protected final function setCookie($user_id, $expire = 7 * 86400) {
+            $time = time();
+            setcookie('ltime', $time, $time + $expire, '/');
+            setcookie('sid', hash('sha256', $user_id . $time) . '.' . base64_encode($user_id), $time + $expire, '/');
+        }
+        
+        protected final function setUser($user_id) {
+            $this->_login_user = $user_id;
+        }
+        
+        protected final function getUser() {
+            return $this->_login_user;
         }
     }

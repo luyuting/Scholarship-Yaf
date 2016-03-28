@@ -24,19 +24,9 @@
                 $this->response(10002, ['cause' => 'wrong password']);
                 return;
             }
-            $this->setSession($user_id);
+            $this->setUser($user_id);
             $this->setCookie($user_id);
             $this->response(10000, [], $info);
         }
         
-        private function setSession($user_id) {
-            session_start();
-            $_SESSION['sid'] = $user_id;
-        }
-        
-        private function setCookie($user_id, $expire = 7 * 86400) {
-            $time = time();
-            setcookie('ltime', $time, $time + $expire, '/');
-            setcookie('sid', hash('sha256', $user_id . $time) . '.' . base64_encode($user_id), $time + $expire, '/');
-        }
     }

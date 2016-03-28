@@ -1,5 +1,5 @@
 <?php
-    class Admin_BaseController extends Abstract_Controller_Ajax {
+    class Admin_BaseController extends Abstract_Controller_AjaxAd {
         
         protected $_no_login = ['adminlogin'];
         public function adminLoginAction() {
@@ -20,9 +20,8 @@
                 $this->response(10012, ['cause' => 'wrong password']);
                 return;
             }
-            
-            session_start();
-            $_SESSION['aid'] = $admin_account;
+            $this->setAdmin($admin_account);
+            $this->setCookie($admin_account);
             $this->response(10010, [], $info);
         }
         
