@@ -8,14 +8,16 @@ $(function() {
 		}
 		
 		var params = {
-			'user_id': $('#userid').val().trim(),
-			'user_pass': $('#password').val().trim()
+			'admin_account': $('#userid').val().trim(),
+			'admin_pass': $('#password').val().trim()
 		};
 		
-		var url = '/user_login/studentlogin';
+		var url = '/admin_base/adminlogin';
 		$.post(url, params, function(data, status) {
-			if(data.code !== 10000) {
+			if(data.code !== 10010) {
 				alert("error-code: " + data.code + "\nerror-info: " + data.message.cause);
+			} else {
+				location.href = '/page_admin/setting';
 			}
 		}, 'json');
 	});
@@ -32,15 +34,12 @@ $(function() {
 	$('input.has-error').live('keyup', function() {
 		$(this).removeClass('has-error');
 	});
-	
-	loadImg();
 });
 
 function valid() {
 	var valid = true;
 	
-	//var id_valid = /^(201)\d{6}$/;
-	var id_valid = /^\d{9}$/
+	var id_valid = /^[^<|>|;|\?|\||'|&]+$/;
 	var pass_valid = /^[\w]{6,20}$/;
 	if (!id_valid.test($('#userid').val().trim())) {
 		$('#userid').removeClass().addClass('has-error').focus();
@@ -55,12 +54,4 @@ function valid() {
 	}
 	
 	return valid;
-}
-
-function loadImg() {
-	var flex = $('<div></div>').addClass('flex-box main');
-	for(var i = 0; i < 4; i ++) {
-		flex.append($('<div><img class="page-image" src="/img/page/' + (1 + i) + '.png"/></div>'));
-	}
-	$('#login').before(flex);
 }

@@ -9,7 +9,7 @@
         private $_stmt = null;
         
         public function __construct() {
-            $this->_pdo = new PDO('mysql:dbname=db_app;host=127.0.0.1:3306', 'root', 'Lyt_0415');
+            $this->_pdo = new PDO('mysql:dbname=db_scholarship;host=127.0.0.1:3306', 'root', 'Lyt_0415');
             $this->_pdo->query('set names utf8');
         }
         

@@ -106,10 +106,10 @@ hr {
 	padding: 1px;
 }
 
-.main {
+.container {
 	width: 500px;
 	max-width: calc(100% - 10px);
-	margin: auto;
+	margin: 0 auto 10px;
 	padding:10px 5px;
 	border: 1px solid #e1e1e1;
 	-webkit-box-shadow: 0 0 3px #eee,inset 0 0 3px #fff;
@@ -117,6 +117,11 @@ hr {
 	background: #fbfbfb;
 	border-radius: 7px;
 }
+
+.container.page-title {
+	text-align: center;
+}
+
 .main-table {
 	margin:50px auto 80px;
 }

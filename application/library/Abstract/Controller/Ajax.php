@@ -1,10 +1,11 @@
 <?php
-    class Abstract_Controller_Ajax extends Yaf_Controller_Abstract {
+    class Abstract_Controller_Ajax extends Abstract_Controller_Default {
         
         public function init() {
             $dispatcher = Yaf_Dispatcher::getInstance();
             $dispatcher->autoRender(false);
             $dispatcher->disableView();
+            parent::init();
         }
         
         protected function response($code, array $message, $data = null) {

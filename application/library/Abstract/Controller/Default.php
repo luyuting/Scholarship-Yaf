@@ -9,11 +9,12 @@
                 try {
                     $this->loginValidate();
                 } catch(Exception_NoLogin $e) {
-                    $this->getResponse()->setRedirect('/page/login');
+                    $this->getResponse()->setRedirect('/page_user/login');
                 }
             }
         }
         
+        // 应当区分管理员和普通用户
         protected function loginValidate() {
             
             // validate, if not login, throw exception

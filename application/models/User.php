@@ -2,7 +2,7 @@
     class UserModel {
         
         public static function getUserInfoById($user_id) {
-            $params = ['userId' => $user_id ];
+            $params = ['user_id' => $user_id ];
             $mc = Base_Mc::getInstance();
             $cache_config = Comm_Config::get('cache.user');
             $info = $mc->get($cache_config, $params, function() use ($params){
