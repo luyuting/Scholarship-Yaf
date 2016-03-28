@@ -1,5 +1,5 @@
 <?php
-    class Page_AdminController extends Abstract_Controller_Default {
+    class Page_AdminController extends Abstract_Controller_DefaultAd {
         
         protected $_no_login = ['login'];
         
@@ -8,8 +8,7 @@
         }
         
         public function homeAction() {
-            session_start();
-            $admin_account = $_SESSION['aid'];
+            $admin_account = $this->getAdmin();
             
             $info = AdminModel::getAdminInfoByAccount($admin_account);
             
