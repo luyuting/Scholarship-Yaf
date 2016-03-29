@@ -49,3 +49,6 @@ Temporary Items
 
 # Directories for docs
 /php_docs_code
+
+# Directories for tests
+/public/test
