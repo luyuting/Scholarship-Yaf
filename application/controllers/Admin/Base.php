@@ -9,20 +9,20 @@
             
             if (!Comm_ArgsCheck::string($admin_account) || !Comm_ArgsCheck::string($admin_pass,
                     Comm_ArgsCheck::USER_PASS)) {
-                $this->response(10013, ['cause' => 'invalid params']);
+                $this->error(Comm_Const::E_INVALID_PARAM);
             }
             $info = AdminModel::getAdminInfoByAccount($admin_account);
             if (empty($info)) {
-                $this->response(10011, ['cause' => 'no such user']);
+                $this->error(Comm_Const::E_WRONG_ACCOUNT);
                 return;
             }
             if ($admin_pass != $info['ad_pass']) {
-                $this->response(10012, ['cause' => 'wrong password']);
+                $this->error(Comm_Const::E_WRONG_PASS);
                 return;
             }
             $this->setAdmin($admin_account);
             $this->setCookie($admin_account);
-            $this->response(10010, [], $info);
+            $this->success($info);
         }
         
         public function scholarBaseAction() {
@@ -32,24 +32,24 @@
             $student_num = $req->getPost('student_num');
             if (!Comm_ArgsCheck::int($scholar_type, 1, 7) || !Comm_ArgsCheck::int($scholar_ratio, 1, 100)
                 || !Comm_ArgsCheck::int($student_num, 1)) {
-                $this->response(20003, ['cause' => 'invalid params']);
+                $this->error(Comm_Const::E_INVALID_PARAM);
                 return;
             }
             $admin_account = $this->getAdmin();         
             $scholar_id = Scholarship_BaseModel::setBaseSetting($scholar_type, $scholar_ratio, $student_num, $admin_account);
             if ($scholar_id == 0) {
-                $this->response(20001, ['cause' => 'error params']);
+                $this->error(Comm_Const::E_UNKOWN);
                 return;
             }
             $info = Scholarship_BaseModel::getBaseSetting($scholar_id);
-            $this->response(20000, [], $info);
+            $this->success($info);
         }
         
         public function scholarBaseAllAction() {
             $req = $this->getRequest();
             $admin_account = $this->getAdmin();
             $info = Scholarship_BaseModel::getAllBaseSetting($admin_account);
-            $this->response(20010, [], $info);
+            $this->success($info);
         }
         
         public function addAdminAction() {

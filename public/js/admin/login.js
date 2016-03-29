@@ -14,7 +14,7 @@ $(function() {
 		
 		var url = '/admin_base/adminlogin';
 		$.post(url, params, function(data, status) {
-			if(data.code !== 10010) {
+			if(data.code !== 10000) {
 				alert("error-code: " + data.code + "\nerror-info: " + data.message.cause);
 			} else {
 				location.href = '/page_admin/setting';
