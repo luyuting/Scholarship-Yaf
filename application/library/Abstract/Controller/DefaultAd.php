@@ -48,6 +48,10 @@
         }
         
         protected final function setAdmin($admin_account) {
+            if (is_null($this->_login_admin)) {
+                session_start();
+            }
+            $_SESSION['aid'] = $admin_account;
             $this->_login_admin = $admin_account;
         }
             

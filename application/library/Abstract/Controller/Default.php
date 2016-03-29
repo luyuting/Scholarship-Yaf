@@ -48,6 +48,10 @@
         }
         
         protected final function setUser($user_id) {
+            if (is_null($this->_login_user)) {
+                session_start();
+            }
+            $_SESSION['sid'] = $user_id;
             $this->_login_user = $user_id;
         }
         
