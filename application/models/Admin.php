@@ -23,7 +23,11 @@
            $res = $mc->set($cache_config, $cache_params, function() use ($model) {
                $admin_sql = Impl_Admin::getInstance();
                $rs = $admin_sql->auto()->bulidSave($model)->exec();
-               return $rs;
+               if ($rs == 1) {
+                   return $model;
+               } else {
+                   return null;
+               }
            });
            // 设置操作记录
            
