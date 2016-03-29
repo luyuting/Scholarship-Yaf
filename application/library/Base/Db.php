@@ -7,10 +7,18 @@
     class Base_Db {
         private $_pdo = null;
         private $_stmt = null;
+        private static $_instance = null;
         
-        public function __construct() {
+        private function __construct() {
             $this->_pdo = new PDO('mysql:dbname=db_scholarship;host=127.0.0.1:3306', 'root', 'Lyt_0415');
             $this->_pdo->query('set names utf8');
+        }
+        
+        public static function getInstance() {
+            if (is_null(self::$_instance)) {
+                self::$_instance = new self();
+            }
+            return self::$_instance;
         }
         
         /**

@@ -50,7 +50,7 @@
          */
         public function auto() {
             if (is_null(self::$_db)) {
-                self::$_db = new Base_Db();
+                self::$_db = Base_Db::getInstance();
             }
             if (!$this->_auto) {
                 $this->_auto = true;
