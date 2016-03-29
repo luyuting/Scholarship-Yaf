@@ -108,7 +108,7 @@ hr {
 
 .container {
 	width: 500px;
-	max-width: calc(100% - 10px);
+	max-width: calc(100% - 12px); /* take border-width into consideration */
 	margin: 0 auto 10px;
 	padding:10px 5px;
 	border: 1px solid #e1e1e1;
