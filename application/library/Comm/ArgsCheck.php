@@ -22,4 +22,15 @@
             return (bool) preg_match($preg, $arg);
         }
         
+        public static function int(&$arg, $min = null, $max = null, $default = null) {
+            is_string($arg) && is_numeric($arg) && $arg = (int) $arg;
+            if (!is_int($arg) || (!is_null($min) && $arg < $min) || (!is_null($max) && $arg > $max)) {
+                if (is_int($default)) {
+                    $arg = $default;
+                }
+                return false;
+            }
+            return true;
+        }
+        
     }
