@@ -32,8 +32,6 @@ $(function() {
 	$('input.has-error').live('keyup', function() {
 		$(this).removeClass('has-error');
 	});
-	
-	loadImg();
 });
 
 function valid() {
@@ -54,12 +52,4 @@ function valid() {
 	}
 	
 	return valid;
-}
-
-function loadImg() {
-	var flex = $('<div></div>').addClass('flex-box container');
-	for(var i = 0; i < 4; i ++) {
-		flex.append($('<div><img class="page-image" src="/img/page/' + (1 + i) + '.png"/></div>'));
-	}
-	$('#login').before(flex);
 }
