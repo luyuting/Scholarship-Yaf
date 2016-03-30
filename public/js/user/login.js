@@ -43,10 +43,10 @@ function valid() {
 		$('#userid').removeClass().addClass('has-error').focus();
 		valid = false;
 	}
-	if (!pass_valid.test($('#userid').val().trim())) {
+	if (!pass_valid.test($('#password').val().trim())) {
 		$('#password').removeClass().addClass('has-error');
 		if (!valid) {
-			$('#userid').focus();
+			$('#password').focus();
 			valid = false;
 		}
 	}
