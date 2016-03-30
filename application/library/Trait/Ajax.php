@@ -1,6 +1,13 @@
 <?php
     trait Trait_Ajax {
         
+        public function init() {
+            $dispatcher = Yaf_Dispatcher::getInstance();
+            $dispatcher->autoRender(false);
+            $dispatcher->disableView();
+            parent::init();
+        }
+        
         protected function response($code, array $message, $data = null) {
             $this->checkMessage($message);
             $res = [
