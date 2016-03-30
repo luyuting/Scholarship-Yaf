@@ -29,7 +29,7 @@ $(function() {
 		}
 	});
 	
-	$('input.has-error').live('keyup', function() {
+	$('input.has-error').live('keydown', function() {
 		$(this).removeClass('has-error');
 	});
 });
@@ -45,7 +45,7 @@ function valid() {
 	}
 	if (!pass_valid.test($('#password').val().trim())) {
 		$('#password').removeClass().addClass('has-error');
-		if (!valid) {
+		if (valid) {
 			$('#password').focus();
 			valid = false;
 		}
