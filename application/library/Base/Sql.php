@@ -109,7 +109,7 @@
                 'params' => $model
             ];
             if ($this->_auto) {
-                $this->rs[] = self::$_db->execute($build['sql'], $build['params']);
+                $this->_rs[] = self::$_db->execute($build['sql'], $build['params']);
                 return $this;
             }
             return $build;
@@ -130,7 +130,7 @@
                 'params' => $where_params
             ];
             if ($this->_auto) {
-                $this->rs[] = self::$_db->execute($build['sql'], $build['params']);
+                $this->_rs[] = self::$_db->execute($build['sql'], $build['params']);
                 return $this;
             }
             return $build;
@@ -152,7 +152,7 @@
                 'params' => array_merge(array_values($model), array_values($where_params))
             ];
             if ($this->_auto) {
-                $this->rs[] = self::$_db->execute($build['sql'], $build['params']);
+                $this->_rs[] = self::$_db->execute($build['sql'], $build['params']);
                 return $this;
             }
             return $build;
