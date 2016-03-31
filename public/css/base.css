@@ -110,7 +110,7 @@ hr {
 	width: 500px;
 	max-width: calc(100% - 12px); /* take border-width into consideration */
 	margin: 0 auto 10px;
-	padding:10px 5px;
+	padding: 10px 5px;
 	border: 1px solid #e1e1e1;
 	-webkit-box-shadow: 0 0 3px #eee,inset 0 0 3px #fff;
 	box-shadow: 0 0 3px #eee,inset 0 0 3px #fff;
@@ -122,38 +122,45 @@ hr {
 	text-align: center;
 }
 
-.main-table {
-	margin:50px auto 80px;
+.body-flex-box {
+	display: flex;
+	display: -webkit-flex;
+	flex-direction: column;
+	-webkit-flex-direction: column;
 }
-.main_operate {
-	float:left;
-	width:80%;
-	margin-left:10%;
-	background-color:#dfdefe;
-	border-top:1px solid #aaa;
+
+.wrap{
+	flex: 1;	
 }
-.table-operate,i {
-	float:left;
-	font-size:14px;
-	color:#235a81;
-	height:20px;
-	line-height:20px;
-	margin:5px 20px 5px 0;
+
+.footer {
+	display: flex;
+	display: -webkit-flex;
+	text-align: center;
+	margin-bottom: 0;
 }
-.main_operate img,.table-operate img {
-	float:left;
-	margin:2px 5px;
-	opacity:0.6;
+
+.footer span {
+	flex: 1;
+	-webkit-flex: 1;
+	border-left: 1px solid #c0c0c0;
 }
-.table-operate input {
-	float:left;
-	margin:3.5px 5px;
+
+.footer span:nth-child(1) {
+	border-left: none;
 }
-.table-operate:hover {
-	cursor:pointer;
-	text-decoration:underline;
+
+.footer span a, .flex-box span a {
+	display: block;
+	text-decoration: none;
 }
-.main_operate i {
-	color:#333;
-	font-weight:600;
+
+.footer span a, .footer span a:active, .footer span a:link, .footer span a:visited {
+	background: transparent;
+	color: #000;
+}
+
+.flex-box span a, .flex-box span a:active, .flex-box span a:link, .flex-box span a:visited {
+	background: transparent;
+	color: #fff;
 }
