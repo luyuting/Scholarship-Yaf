@@ -10,16 +10,19 @@
         const SCHOLAR_SCIENCE = 6;
         const SCHOLAR_PRACTICE = 7;
     
-        protected $_type = self::SCHOLAR_NONE;
+        // private static $_type = self::SCHOLAR_NONE;
+        private function __construct() {
+            
+        }
         
         public static function editBaseSetting() {
-            $sql = '';
+
         }
         
         public static function getAllBaseSetting($admin_account) {
             $db = Base_Db::getInstance();
-            $sql = 'select i.*, a.* from tb_scholarship i, tb_admin a where a.ad_id = i.sc_admin and 
-                (i.sc_annual, i.sc_grade) in (select ad_annual, ad_grade from tb_admin where ad_id = ?)';
+            $sql = 'select i.*, a.* from tb_scholarship i, tb_admin a where a.ad_id = i.sc_admin and   
+                (i.sc_annual, i.sc_grade) in (select ad_annual, ad_grade from tb_admin where ad_account = ?)';
             $params = [$admin_account];
             $res = $db->query($sql, $params);
             return self::packSetting($res);
@@ -35,6 +38,15 @@
             return empty($info)? []: $info[0];
         }
         
+        public static function getScholarId($admin_account, $type) {
+            $db = Base_Db::getInstance();
+            $sql = 'select sc_id from tb_scholarship where (sc_annual, sc_grade) in (select ad_annual,
+                ad_grade from tb_admin where ad_account = ?) and sc_type = ? ';
+            $params = [$admin_account, $type];
+            $res = $db->query($sql, $params);
+            return empty($res)? 0: $res[0]['sc_id'];
+        }
+        
         public static function getScholarNameByType($type) {
             $res = null;
             switch ($type) {
@@ -48,6 +60,24 @@
                 default: break;
             }
             return $res;
+        }
+        
+        public static function scoreParams($type, $name, $descr_a, $descr_b, $score, $ratio) {
+            $model = [
+                'its_type' => $type,
+                'its_name' => $name,
+                'its_describe_a' => $descr_a,
+                'its_describe_b' => $descr_b,
+                'its_score' => $score,
+                'its_score_ratio' => $ratio
+            ];
+        
+            $score_sql = Impl_Score::getInstance();
+            $rs = $score_sql->auto()->bulidSave($model)->exec();
+            if ($rs[0] == 1) {
+                return true;
+            }
+            return false;
         }
         
         public static function setBaseSetting($scholar_type, $scholar_ratio, $student_num, $admin_account) {

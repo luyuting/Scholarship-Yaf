@@ -52,11 +52,66 @@
             $this->success($info);
         }
         
+        public function scholarStudyAction() {
+            
+        }
+        
+        public function scholarSpiritualAction() {
+            $this->scholarItemCheck(Scholarship_SpiritualModel::getType());
+        }
+        
+        public function scholarActivityAction() {
+            $this->scholarItemCheck(Scholarship_ActivityModel::getType());
+        }
+        
+        public function scholarWorkAction() {
+            $this->scholarItemCheck(Scholarship_WorkModel::getType());
+        }
+        
+        public function scholarScienceAction() {
+            $this->scholarItemCheck(Scholarship_ScienceModel::getType());
+        }
+        
+        public function scholarPracticeAction() {
+            $this->scholarItemCheck(Scholarship_PracticeModel::getType());
+        }
+        
         public function addAdminAction() {
             
         }
         
         public function delAdminAction() {
             
+        }
+        
+        private function scholarItemCheck($type) {
+            if (!Comm_ArgsCheck::int($type, 1, 7)) {
+                $this->error(Comm_Const::E_INTERNAL);
+                return;
+            }
+            $req = $this->getRequest();
+            $name = $req->getPost('name');
+            $descr_a = $req->getPost('descr_a');
+            $descr_b = $req->getPost('descr_b');
+            $score = $req->getPost('score');
+            $ratio = $req->getPost('ratio');
+            
+            if (!Comm_ArgsCheck::string($name) || !Comm_ArgsCheck::string($descr_a)
+            || !Comm_ArgsCheck::string($descr_b) || !Comm_ArgsCheck::int($score) || 
+            !Comm_ArgsCheck::float($ratio, 0)) {
+                $this->error(Comm_Const::E_INVALID_PARAM);
+                return;
+            }
+            $admin_account = $this->getAdmin();
+            $scholar_type_id = Scholarship_BaseModel::getScholarId($admin_account, $type);
+            if ($scholar_type_id == 0) {
+                $this->error(Comm_Const::E_INTERNAL);
+                return;
+            }
+            if (!Scholarship_BaseModel::scoreParams($scholar_type_id, $name, $descr_a, $descr_b, $score, $ratio)) {
+                $this->error(Comm_Const::E_UNKOWN);
+                return;
+            }
+            $this->success();
         }
     }

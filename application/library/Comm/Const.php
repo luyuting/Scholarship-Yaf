@@ -14,4 +14,5 @@
         const E_WRONG_PASS = '10003,Wrong Password';
         
         const E_UNKOWN = '10004,Unkown Error';
+        const E_INTERNAL = '10005,Internal Error';
     }

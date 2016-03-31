@@ -33,4 +33,15 @@
             return true;
         }
         
+        public static function float(&$arg, $min = null, $max = null, $default = null) {
+            is_numeric($arg) && $arg = floatval($arg);
+            if (!is_float($arg) || (!is_null($min) && $arg < $min) || (!is_null($max) && $arg > $max)) {
+                if (is_float($default)) {
+                    $arg = $default;
+                }
+                return false;
+            }
+            return true;
+        }
+        
     }
