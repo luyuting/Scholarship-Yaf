@@ -76,6 +76,18 @@
             $this->scholarItemCheck(Scholarship_PracticeModel::getType());
         }
         
+        public function scholarItemScoreAction() {
+            $req = $this->getRequest();
+            $name = $req->getPost('name');
+            if (!Comm_ArgsCheck::string($name)) {
+                $this->error(Comm_Const::E_INVALID_PARAM);
+                return;
+            }
+            $admin_account = $this->getAdmin();
+            $info = Scholarship_BaseModel::getScholarItemScore($admin_account, $name);
+            $this->success($info);
+        }
+        
         public function addAdminAction() {
             
         }
@@ -93,11 +105,10 @@
             $name = $req->getPost('name');
             $descr_a = $req->getPost('descr_a');
             $descr_b = $req->getPost('descr_b');
-            $score = $req->getPost('score');
-            $ratio = $req->getPost('ratio');
-            
+            $score = $req->getPost('score', 0);
+            $ratio = $req->getPost('ratio', 1);
             if (!Comm_ArgsCheck::string($name) || !Comm_ArgsCheck::string($descr_a)
-            || !Comm_ArgsCheck::string($descr_b) || !Comm_ArgsCheck::int($score) || 
+            || !Comm_ArgsCheck::string($descr_b, Comm_ArgsCheck::BASE_EMPTY_STR) || !Comm_ArgsCheck::int($score) || 
             !Comm_ArgsCheck::float($ratio, 0)) {
                 $this->error(Comm_Const::E_INVALID_PARAM);
                 return;

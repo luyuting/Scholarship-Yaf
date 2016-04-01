@@ -47,6 +47,16 @@
             return empty($res)? 0: $res[0]['sc_id'];
         }
         
+        public static function getScholarItemScore($admin_account, $name) {
+            $db = Base_Db::getInstance();
+            $sql = 'select i.* from tb_item_score i, tb_scholarship where (sc_annual, sc_grade) in 
+                (select ad_annual, ad_grade from tb_admin where ad_account = ? ) and sc_id = its_type and 
+                its_name = ? order by its_score desc, its_describe_a desc, its_score_ratio desc';
+            $params = [$admin_account, $name];
+            $res = $db->query($sql, $params);
+            return $res;
+        }
+        
         public static function getScholarNameByType($type) {
             $res = null;
             switch ($type) {
