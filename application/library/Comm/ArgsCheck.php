@@ -8,8 +8,10 @@
         
         // 由空格、换行符构成的空字符串
         const EMPTY_STR = "/^(\\s)+$/";
-        // 不包含特殊字符
+        // 不包含特殊字符，不允许为空
         const BASE_STR = "/^[^<|>|;|\\?|\\||'|&]+$/";
+        // 不包含特殊字符，允许为空
+        const BASE_EMPTY_STR = "/^[^<|>|;|\\?|\\||'|&]*$/";
         // 6-20位，字母、数字或下划线组成
         const USER_PASS = "/^[\\w]{6,20}$/";  
         // 9位，以201X开头
@@ -27,8 +29,9 @@
             if (!is_int($arg) || (!is_null($min) && $arg < $min) || (!is_null($max) && $arg > $max)) {
                 if (is_int($default)) {
                     $arg = $default;
+                } else {
+                    return false;
                 }
-                return false;
             }
             return true;
         }
@@ -38,8 +41,9 @@
             if (!is_float($arg) || (!is_null($min) && $arg < $min) || (!is_null($max) && $arg > $max)) {
                 if (is_float($default)) {
                     $arg = $default;
+                } else {
+                    return false;
                 }
-                return false;
             }
             return true;
         }
