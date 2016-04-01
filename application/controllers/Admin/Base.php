@@ -105,11 +105,11 @@
             $name = $req->getPost('name');
             $descr_a = $req->getPost('descr_a');
             $descr_b = $req->getPost('descr_b');
-            $score = $req->getPost('score', 0);
-            $ratio = $req->getPost('ratio', 1);
+            $score = $req->getPost('score');
+            $ratio = $req->getPost('ratio');
             if (!Comm_ArgsCheck::string($name) || !Comm_ArgsCheck::string($descr_a)
-            || !Comm_ArgsCheck::string($descr_b, Comm_ArgsCheck::BASE_EMPTY_STR) || !Comm_ArgsCheck::int($score) || 
-            !Comm_ArgsCheck::float($ratio, 0)) {
+            || !Comm_ArgsCheck::string($descr_b, Comm_ArgsCheck::BASE_EMPTY_STR) || !Comm_ArgsCheck::int($score, null, null, 0) || 
+            !Comm_ArgsCheck::float($ratio, 0, null, 1)) {
                 $this->error(Comm_Const::E_INVALID_PARAM);
                 return;
             }
