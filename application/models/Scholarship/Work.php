@@ -72,6 +72,14 @@
             return self::setApply($scholar_type_id, $student, self::TABLE_WORK_REWARD, $id, $score);
         }
         
+        public static function delWorkCadre($student, $apply_id) {
+            return self::delApply($student, $apply_id, self::TABLE_WORK_CADRE, 'wc_id');
+        }
+        
+        public static function delWorkReward($student, $apply_id) {
+            return self::delApply($student, $apply_id, self::TABLE_WORK_REWARD, 'wr_id');
+        }
+        
         public static function getWorkCadre($student, $annual) {
             
         }

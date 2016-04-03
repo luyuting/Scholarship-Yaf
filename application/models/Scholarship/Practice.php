@@ -53,7 +53,7 @@
                     case '学部（学院）级': $score += 5; break;
                     case '军训先进集体成员': $score += 2; break;
                     case '军训先进个人': $score += 2; break;
-                    default: $person_prize=''; break;
+                    default: $person_prize = ''; break;
                 }
                 switch ($team_role) {
                     case '队长': $pr_score += 1;
@@ -62,6 +62,10 @@
                 }
             }
             return self::setApply($scholar_type_id, $student, self::TABLE_PRACTICE, $id, $score);
+        }
+        
+        public static function delPractice($student, $apply_id) {
+            return self::delApply($student, $apply_id, self::TABLE_PRACTICE, 'pr_id');
         }
         
         public static function getPractice($student, $annual) {

@@ -152,6 +152,22 @@
             return self::setApply($scholar_type_id, $student, self::TABLE_ACTIVITY_ROLE, $id, $score);
         }
         
+        public static function delInvention($student, $apply_id) {
+            return self::delApply($student, $apply_id, self::TABLE_INVENTION, 'in_id');
+        }
+        
+        public static function delPaper($student, $apply_id) {
+            return self::delApply($student, $apply_id, self::TABLE_PAPER, 'pa_id');
+        }
+        
+        public static function delScieTechComp($student, $apply_id) {
+            return self::delApply($student, $apply_id, self::TABLE_SCIE_TECH_COMP, 'stc_id');
+        }
+        
+        public static function delScieTechProject($student, $apply_id) {
+            return self::delApply($student, $apply_id, self::TABLE_SCIE_TECH_PROJECT, 'stp_id');
+        }
+        
         public static function getInvention($student, $annual) {
            
         }

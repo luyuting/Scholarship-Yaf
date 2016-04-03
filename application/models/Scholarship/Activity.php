@@ -85,6 +85,14 @@
             $score = (int) $item_score['its_score'];
             return self::setApply($scholar_type_id, $student, self::TABLE_ACTIVITY_ROLE, $id, $score);
         }
+        
+        public static function delActivityComp($apply_id) {
+            return self::delApply($apply_id, self::TABLE_ACTIVITY_COMP, 'ac_id');
+        }
+        
+        public static function delActivityRole($apply_id) {
+            return self::delApply($apply_id, self::TABLE_ACTIVITY_ROLE, 'ar_id');
+        }
                
         public static function getActivityComp($student, $annual) {
             

@@ -80,8 +80,16 @@
             return self::setApply($scholar_type_id, $student, self::TABLE_SPIRITUAL_REWARD, $id, $score);
         }
         
-        public static function getAppraisalRatio($student, $annual) {
-            
+        public static function delAppraisal($student, $apply_id) {
+            return self::delApply($student, $apply_id, self::TABLE_APPRAISAL, 'app_id');
+        }
+        
+        public static function delDomitory($student, $apply_id) {
+            return self::delApply($student, $apply_id, self::TABLE_DORMITORY, 'do_id');
+        }
+        
+        public static function delSpiritualReward($student, $apply_id) {
+            return self::delApply($student, $apply_id, self::TABLE_SPIRITUAL_REWARD, 'spr_id');
         }
         
         public static function getAppraisal($student, $annual) {
