@@ -81,11 +81,11 @@
         }
         
         public static function getWorkCadre($student, $annual) {
-            
+            return self::getApply($student, $annual, self::TABLE_WORK_CADRE, 'wc_id');
         }
     
         public static function getWorkReward($student, $annual) {
-            
+            return self::getApply($student, $annual, self::TABLE_WORK_REWARD, 'wr_id');
         }
         
         private static function workRewardModel($name, $student, $rate, $time) {

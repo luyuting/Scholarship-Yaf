@@ -29,11 +29,7 @@
         }
         
         public static function getStudyUnique($student, $annual) {
-            $db = Base_Db::getInstance();
-            $sql = "select ap_id, ap_scho_type, ap_state, sc_name, sc_ratio from tb_apply, tb_scholarship where ap_item_table = 't_scholarship' and
-                ap_student = ? and sc_id = ap_scho_type and sc_annual = ? ";
-            $params = [$student, $annual];
-            return $db->query($sql, $params);
+            return self::getApply($student, $annual, self::TABLE_SCHOLARSHIP, 'sc_id');
         }
 
         public static function delStudyScholar($student, $apply_id) {

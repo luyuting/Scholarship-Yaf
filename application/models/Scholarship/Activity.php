@@ -95,11 +95,11 @@
         }
                
         public static function getActivityComp($student, $annual) {
-            
+            return self::getApply($student, $annual, self::TABLE_ACTIVITY_COMP, 'ac_id');
         }
         
         public static function getActivityRole($student, $annual) {
-           
+            return self::getApply($student, $annual, self::TABLE_ACTIVITY_ROLE, 'ar_id');
         }
         
         private static function activityCompModel($name, $student, $rate, $prize, $role, $rule, $break,

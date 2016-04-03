@@ -93,15 +93,15 @@
         }
         
         public static function getAppraisal($student, $annual) {
-            
+            return self::getApply($student, $annual, self::TABLE_APPRAISAL, 'app_id');
         }
         
         public static function getDormitory($student, $annual) {
-            
+            return self::getApply($student, $annual, self::TABLE_DORMITORY, 'do_id');
         }
         
         public static function getSpiritualReward($student, $annual) {
-            
+            return self::getApply($student, $annual, self::TABLE_SPIRITUAL_REWARD, 'spr_id');
         }
         
         private static function appraisalModel($student, $ratio) {

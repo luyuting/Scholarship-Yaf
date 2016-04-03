@@ -1,63 +1,86 @@
 <?php
-    class AuditModel {
+    class AuditModel {  
+        use Trait_Table;
         
         public static function getStudyList($admin_account) {
-            
+            return self::getList($admin_account, self::TABLE_SCHOLARSHIP, 'sc_id', ['user_id desc', 'user_class desc']);
         }
         
         public static function getAppraisalList($admin_account) {
-            
+            return self::getList($admin_account, self::TABLE_APPRAISAL, 'app_id', ['ap_score asc', 'user_id desc']);
         }
         
         public static function getDormitoryList($admin_account) {
-           
+            return self::getList($admin_account, self::TABLE_DORMITORY, 'do_id');
         }
         
         public static function getSpiritualRewardList($admin_account) {
-            
+            return self::getList($admin_account, self::TABLE_SPIRITUAL_REWARD, 'spr_id');
         }
         
         public static function getActivityCompList($admin_account) {
-            
+            return self::getList($admin_account, self::TABLE_ACTIVITY_COMP, 'ac_id');
         }
         
         public static function getActivityRoleList($admin_account) {
-            
+            return self::getList($admin_account, self::TABLE_ACTIVITY_ROLE, 'ar_id');
         }
         
         public static function getWorkCadreList($admin_account) {
-            
+            return self::getList($admin_account, self::TABLE_WORK_CADRE, 'wc_id');
         }
         
         public static function getWorkRewardList($admin_account) {
-           
+            return self::getList($admin_account, self::TABLE_WORK_REWARD, 'wr_id');
         }
         
         public static function getScieTechCompList($admin_account) {
-           
+            return self::getList($admin_account, self::TABLE_SCIE_TECH_COMP, 'stc_id');
         }
         
         public static function getScieTechPaperList($admin_account) {
-            
+            return self::getList($admin_account, self::TABLE_PAPER, 'stp_id');
         }
         
         public static function getScieTechInventionList($admin_account) {
-            
+            return self::getList($admin_account, self::TABLE_INVENTION, 'in_id');
         }
         
         public static function getScieTechProjectList($admin_account) {
-            
+            return self::getList($admin_account, self::TABLE_SCIE_TECH_PROJECT, 'stp_id');
         }
         
         public static function getPracticeList($admin_account) {
-            
+            return self::getList($admin_account, self::TABLE_PRACTICE, 'pr_id');
         }
         
-        public static function setScholarState($ap_id, $ap_state) {
-            
+        public static function auditScholar($apply_id, $admin_account, $state, $remark) {
+            $info = AdminModel::getAdminInfoByAccount($admin_account);
+            $admin_id = $info['admin_id'];
+            $audit_sql = Impl_Audit::getInstance();
+            $model = $audit_sql->auditModel($apply_id, $admin_id, $state, $remark);
+            $rs = $audit_sql->auto()->buildSave($model)->exec();
+            $id = $rs[0];
+            if ($id == 0 || is_null($id)) {
+                return false;
+            }
+            $item_sql = Impl_Item::getInstance();
+            $update_rs = $item_sql->auto(self::TABLE_AUDIT)->buildUpdate(['ap_state' => $state, 'ap_audit' => $id],
+                ['ap_id' => $apply_id])->exec();
+            return $update_rs[0] == 1? true: false;
         }
-        
-        public static function setScholarRemark($ap_id, $ap_remark) {
-            
+
+        private static function getList($admin_account, $table, $column, array $order_condition = []) {
+            $db = Base_Db::getInstance();
+            $sql = "select user_id, user_name, user_major, user_class, k.*, p.* from tb_apply p.*, tb_user, {$table} k, 
+				tb_scholarship t where t.sc_id = ap_scho_type and user_id = ap_student and (sc_grade, sc_annual) = (select ad_grade, ad_annual from tb_admin 
+				where ad_account = ? ) and k.{$column} = ap_item_id and ap_item_table = ? order by ";
+            if (!empty($order_condition)) {
+                $sql .= implode(', ', $order_condition);
+            } else {
+                $sql .= "user_id desc, ap_time desc";
+            }
+            $params = [$admin_account, $table];
+            return $db->query($sql, $params);
         }
     }

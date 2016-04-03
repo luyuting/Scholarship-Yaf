@@ -36,6 +36,16 @@
             return $db->execute($sql, $params) == 1? true: false;
         }
         
+        private static function getApply($student, $annual, $table, $column) {
+            $db = Base_Db::getInstance();
+            $sql = "select p.*, k.* from tb_apply p, tb_scholarship t, {$table} k where t.sc_annual = ? 
+                and t.sc_id = ap_scho_type and ap_item_table = ? and ap_student = ? and ap_item_id = 
+                k.{$column} order by p.ap_time desc ";
+            $params = [$annual, $table, $student];
+            return $db->query($sql, $params);
+            
+        }
+        
         private static function setApply($scholar_type_id, $student, $item_table, $item_id, $score) {
             $model = self::applyModel($scholar_type_id, $student, $item_table, $item_id, $score);
             $item_sql = Impl_Item::getInstance();

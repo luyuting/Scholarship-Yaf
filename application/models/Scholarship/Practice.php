@@ -69,7 +69,7 @@
         }
         
         public static function getPractice($student, $annual) {
-            
+            return self::getApply($student, $annual, self::TABLE_PRACTICE, 'pr_id');
         }
         
         private static function practiceModel($title, $name, $student, $team_prize, $person_prize,

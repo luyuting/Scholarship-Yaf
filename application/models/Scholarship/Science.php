@@ -169,19 +169,19 @@
         }
         
         public static function getInvention($student, $annual) {
-           
+            return self::getApply($student, $annual, self::TABLE_INVENTION, 'in_id');
         }
         
         public static function getPaper($student, $annual) {
-        
+            return self::getApply($student, $annual, self::TABLE_PAPER, 'pa_id');
         }
         
         public static function getScieTechComp($student, $annual) {
-            
+            return self::getApply($student, $annual, self::TABLE_SCIE_TECH_COMP, 'stc_id');
         }
             	
         public static function getScieTechProject($student, $annual) {
-            
+            return self::getApply($student, $annual, self::TABLE_SCIE_TECH_PROJECT, 'stp_id');
         }
         
         private static function inventionModel($student, $name, $account, $team_num, $team_order, $type, $time,
