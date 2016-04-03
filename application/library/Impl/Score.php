@@ -17,4 +17,14 @@
         public function __destruct() {
         
         }
+        
+        public function scoreModel($scholar_type_id, $name, $descr_a, $descr_b) {
+            $model_card = [
+                'its_type' => $scholar_type_id,
+                'its_name' => $name,
+                'its_describe_a' => $descr_a,
+                'its_describe_b' => $descr_b
+            ];
+            return $model_card;
+        }
     }
