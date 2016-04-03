@@ -13,7 +13,7 @@
         }
         
         public static function getName() {
-            return Scholarship_BaseModel::getScholarNameByType(self::_type);
+            return Scholarship_BaseModel::getScholarNameByType(self::$_type);
         }
         
         public static function getOrderByAdmin() {
