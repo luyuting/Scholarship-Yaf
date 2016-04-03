@@ -83,11 +83,11 @@
             ];
         
             $score_sql = Impl_Score::getInstance();
-            $rs = $score_sql->auto()->bulidSave($model)->exec();
-            if ($rs[0] == 1) {
-                return true;
+            $rs = $score_sql->auto()->buildSave($model)->exec();
+            if (is_null($rs[0]) || $rs[0] == 0) {
+                return false;
             }
-            return false;
+            return true;
         }
         
         public static function setBaseSetting($scholar_type, $scholar_ratio, $student_num, $admin_account) {

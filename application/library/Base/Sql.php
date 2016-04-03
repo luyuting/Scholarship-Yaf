@@ -95,11 +95,11 @@
         }
         
         /**
-         * 拼装sql插入语句，如果自动执行开启，则立即执行当前sql，保存插入操作影响的行数，并返回当前实例以支持链式调用；
+         * 拼装sql插入语句，如果自动执行开启，则立即执行当前sql，保存插入操作生成的自增长id，并返回当前实例以支持链式调用；
          * @param array $model 要保存的对象，键名对应字段名
          * @return Base_Sql|array 如果没有开启自动执行，返回sql语句和相应的参数列表
          */
-        public function bulidSave(array $model) {
+        public function buildSave(array $model) {
             $keys = array_keys($model);
             $sql = "insert into {$this->_table}(" . implode(', ', $keys) . " ) values(:" 
                 . implode(', :', $keys) . " )";
@@ -109,7 +109,7 @@
                 'params' => $model
             ];
             if ($this->_auto) {
-                $this->_rs[] = self::$_db->execute($build['sql'], $build['params']);
+                $this->_rs[] = self::$_db->getId($build['sql'], $build['params']);
                 return $this;
             }
             return $build;
@@ -121,7 +121,7 @@
          * @param array $where_params where查询条件，仅支持 “=” 条件，键名为字段名称
          * @return Base_Sql|array 如果没有开启自动执行，返回sql语句和相应的参数列表
          */
-        public function bulidDelete(array $where_params) {
+        public function buildDelete(array $where_params) {
             $where_condition = $this->whereCondition($where_params);
             $sql = "delete from {$this->_table} " . $where_condition;
             
