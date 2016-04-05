@@ -11,7 +11,7 @@
         }
         
         protected function initTable() {
-            $this->_table = 'tb_user';
+            $this->_table = Comm_T::TABLE_USER;
         }
         
         public function __destruct() {

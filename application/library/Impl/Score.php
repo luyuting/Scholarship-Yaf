@@ -11,7 +11,7 @@
         }
         
         protected function initTable() {
-            $this->_table = 'tb_item_score';
+            $this->_table = Comm_T::TABLE_ITEM_SCORE;
         }
         
         public function scoreModel($scholar_type_id, $name, $descr_a, $descr_b) {

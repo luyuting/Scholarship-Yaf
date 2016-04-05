@@ -11,7 +11,7 @@
         }
     
         protected function initTable() {
-            $this->_table = 'tb_admin';
+            $this->_table = Comm_T::TABLE_ADMIN;
         }
     
         public function __destruct() {

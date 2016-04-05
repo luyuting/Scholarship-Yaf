@@ -10,7 +10,7 @@
         }
         
         protected function initTable() {
-            $this->_table = 'tb_audit';
+            $this->_table = Comm_T::TABLE_AUDIT;
         }
         
         public function auditModel($apply_id, $admin_id, $state, $remark) {

@@ -4,4 +4,8 @@
         public function baseSettingAction() {
            
         }
+        // 申请端
+        public function studyTypeAction() {
+            
+        }
     }

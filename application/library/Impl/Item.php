@@ -14,7 +14,7 @@
             
         }
         
-        public function auto($table) {
+        public function tAuto($table) {
             $this->_table = $table;
             return parent::auto();
         }

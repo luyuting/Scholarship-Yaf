@@ -8,7 +8,7 @@
             $end_time, $remark) {
             $item_sql = Impl_Item::getInstance();
             $model = self::workCadreModel($level, $last_time, $student, $name, $begin_time, $end_time, $remark);
-            $rs = $item_sql->auto(Comm_T::TABLE_WORK_CADRE)->buildSave($model)->exec();
+            $rs = $item_sql->tAuto(Comm_T::TABLE_WORK_CADRE)->buildSave($model)->exec();
             $id = $rs[0];
             if (id == 0 || is_null($id)) {
                 return false;
@@ -48,7 +48,7 @@
         public static function applyWorkReward($name, $student, $rate, $time) {
             $item_sql = Impl_Item::getInstance();
             $model = self::workRewardModel($name, $student, $rate, $time);
-            $rs = $item_sql->auto(Comm_T::TABLE_WORK_REWARD)->buildSave($model)->exec();
+            $rs = $item_sql->tAuto(Comm_T::TABLE_WORK_REWARD)->buildSave($model)->exec();
             $id = $rs[0];
             if (id == 0 || is_null($id)) {
                 return false;

@@ -7,7 +7,7 @@
         public static function applyAppraisal($student, $ratio) {
             $item_sql = Impl_Item::getInstance();
             $model = self::appraisalModel($student, $ratio);
-            $rs = $item_sql->auto(Comm_T::TABLE_APPRAISAL)->buildSave($model)->exec();
+            $rs = $item_sql->tAuto(Comm_T::TABLE_APPRAISAL)->buildSave($model)->exec();
             $id = $rs[0];
             if (id == 0 || is_null($id)) {
                 return false;
@@ -31,7 +31,7 @@
         public static function applyDormitory($student, $score) {
             $item_sql = Impl_Item::getInstance();
             $model = self::dormitoryModel($student, $score);
-            $rs = $item_sql->auto(Comm_T::TABLE_DORMITORY)->buildSave($model)->exec();
+            $rs = $item_sql->tAuto(Comm_T::TABLE_DORMITORY)->buildSave($model)->exec();
             $id = $rs[0];
             if (id == 0 || is_null($id)) {
                 return false;
@@ -55,7 +55,7 @@
         public static function applySpiritualReward($student, $name, $item, $rate, $time) {
             $item_sql = Impl_Item::getInstance();
             $model = self::spiritualRewarkModel($student, $name, $item, $rate, $time);
-            $rs = $item_sql->auto(Comm_T::TABLE_SPIRITUAL_REWARD)->buildSave($model)->exec();
+            $rs = $item_sql->tAuto(Comm_T::TABLE_SPIRITUAL_REWARD)->buildSave($model)->exec();
             $id = $rs[0];
             if (id == 0 || is_null($id)) {
                 return false;

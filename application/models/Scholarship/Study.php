@@ -18,7 +18,7 @@
                 'sc_ratio' => $scholar_ratio
             ];
             $item_sql = Impl_Item::getInstance();
-            $rs = $item_sql->auto(Comm_T::TABLE_SCHOLARSHIP)->buildQuery($params)->exec();
+            $rs = $item_sql->tAuto(Comm_T::TABLE_SCHOLARSHIP)->buildQuery($params)->exec();
             if (empty($rs[0])) {
                 return 0;
             }

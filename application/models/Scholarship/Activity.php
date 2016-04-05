@@ -8,7 +8,7 @@
             $team_num, $time, $remark) {
             $item_sql = Impl_Item::getInstance();
             $model = self::activityCompModel($name, $student, $rate, $prize, $role, $rule, $break, $team_num, $time, $remark);
-            $rs = $item_sql->auto(Comm_T::TABLE_ACTIVITY_COMP)->buildSave($model)->exec();
+            $rs = $item_sql->tAuto(Comm_T::TABLE_ACTIVITY_COMP)->buildSave($model)->exec();
             $id = $rs[0];
             if (id == 0 || is_null($id)) {
                 return false;
@@ -62,7 +62,7 @@
         public static function applyActivityRole($name, $student, $time, $role, $rate, $host, $remark) {
             $item_sql = Impl_Item::getInstance();
             $model = self::activityRoleModel($name, $student, $time, $role, $rate, $host, $remark);
-            $rs = $item_sql->auto(Comm_T::TABLE_ACTIVITY_ROLE)->buildSave($model)->exec();
+            $rs = $item_sql->tAuto(Comm_T::TABLE_ACTIVITY_ROLE)->buildSave($model)->exec();
             $id = $rs[0];
             if (id == 0 || is_null($id)) {
                 return false;
