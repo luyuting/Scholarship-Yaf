@@ -1,17 +1,13 @@
 <?php
     class Scholarship_SpiritualModel {
         use Trait_Scholarship;
-        
-        const TABLE_APPRAISAL = 'tb_appraisal';
-        const TABLE_DORMITORY = 'tb_dormitory';
-        const TABLE_SPIRITUAL_REWARD = 'tb_spiritual_reward';
-        
+           
         private static $_type = Scholarship_BaseModel::SCHOLAR_SPIRITUAL;
         
         public static function applyAppraisal($student, $ratio) {
             $item_sql = Impl_Item::getInstance();
             $model = self::appraisalModel($student, $ratio);
-            $rs = $item_sql->auto(self::TABLE_APPRAISAL)->buildSave($model)->exec();
+            $rs = $item_sql->auto(Comm_T::TABLE_APPRAISAL)->buildSave($model)->exec();
             $id = $rs[0];
             if (id == 0 || is_null($id)) {
                 return false;
@@ -29,13 +25,13 @@
             }
             $item_score = $rs[0][0];
             $score = (int) $item_score['its_score'];
-            return self::setApply($scholar_type_id, $student, self::TABLE_APPRAISAL, $id, $score);
+            return self::setApply($scholar_type_id, $student, Comm_T::TABLE_APPRAISAL, $id, $score);
         }
         
         public static function applyDormitory($student, $score) {
             $item_sql = Impl_Item::getInstance();
             $model = self::dormitoryModel($student, $score);
-            $rs = $item_sql->auto(self::TABLE_DORMITORY)->buildSave($model)->exec();
+            $rs = $item_sql->auto(Comm_T::TABLE_DORMITORY)->buildSave($model)->exec();
             $id = $rs[0];
             if (id == 0 || is_null($id)) {
                 return false;
@@ -53,13 +49,13 @@
             }
             $item_score = $rs[0][0];
             $score *= (int) $item_score['its_score_ratio'];
-            return self::setApply($scholar_type_id, $student, self::TABLE_DORMITORY, $id, $score);
+            return self::setApply($scholar_type_id, $student, Comm_T::TABLE_DORMITORY, $id, $score);
         }
         
         public static function applySpiritualReward($student, $name, $item, $rate, $time) {
             $item_sql = Impl_Item::getInstance();
             $model = self::spiritualRewarkModel($student, $name, $item, $rate, $time);
-            $rs = $item_sql->auto(self::TABLE_SPIRITUAL_REWARD)->buildSave($model)->exec();
+            $rs = $item_sql->auto(Comm_T::TABLE_SPIRITUAL_REWARD)->buildSave($model)->exec();
             $id = $rs[0];
             if (id == 0 || is_null($id)) {
                 return false;
@@ -77,31 +73,31 @@
             }
             $item_score = $rs[0][0];
             $score = (int) $item_score['its_score'];
-            return self::setApply($scholar_type_id, $student, self::TABLE_SPIRITUAL_REWARD, $id, $score);
+            return self::setApply($scholar_type_id, $student, Comm_T::TABLE_SPIRITUAL_REWARD, $id, $score);
         }
         
         public static function delAppraisal($student, $apply_id) {
-            return self::delApply($student, $apply_id, self::TABLE_APPRAISAL, 'app_id');
+            return self::delApply($student, $apply_id, Comm_T::TABLE_APPRAISAL, 'app_id');
         }
         
         public static function delDomitory($student, $apply_id) {
-            return self::delApply($student, $apply_id, self::TABLE_DORMITORY, 'do_id');
+            return self::delApply($student, $apply_id, Comm_T::TABLE_DORMITORY, 'do_id');
         }
         
         public static function delSpiritualReward($student, $apply_id) {
-            return self::delApply($student, $apply_id, self::TABLE_SPIRITUAL_REWARD, 'spr_id');
+            return self::delApply($student, $apply_id, Comm_T::TABLE_SPIRITUAL_REWARD, 'spr_id');
         }
         
         public static function getAppraisal($student, $annual) {
-            return self::getApply($student, $annual, self::TABLE_APPRAISAL, 'app_id');
+            return self::getApply($student, $annual, Comm_T::TABLE_APPRAISAL, 'app_id');
         }
         
         public static function getDormitory($student, $annual) {
-            return self::getApply($student, $annual, self::TABLE_DORMITORY, 'do_id');
+            return self::getApply($student, $annual, Comm_T::TABLE_DORMITORY, 'do_id');
         }
         
         public static function getSpiritualReward($student, $annual) {
-            return self::getApply($student, $annual, self::TABLE_SPIRITUAL_REWARD, 'spr_id');
+            return self::getApply($student, $annual, Comm_T::TABLE_SPIRITUAL_REWARD, 'spr_id');
         }
         
         private static function appraisalModel($student, $ratio) {

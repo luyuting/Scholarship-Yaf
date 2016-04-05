@@ -1,20 +1,27 @@
 <?php
     class Scholarship_ScienceModel {
         use Trait_Scholarship;
-        
-        const TABLE_INVENTION = 'tb_invention';
-        const TABLE_PAPER = 'tb_paper';
-        const TABLE_SCIE_TECH_COMP = 'tb_scie_tech_comp';
-        const TABLE_SCIE_TECH_PROJECT = 'tb_scie_tech_project';
-        
+  
         private static $_type = Scholarship_BaseModel::SCHOLAR_SCIENCE;
         
-        
+        /**
+         * 科技创新单项：发明专利申请
+         * @param string $student 申请学生
+         * @param string $name  专利名称
+         * @param string $account 专利号
+         * @param string $team_num 团队人数，3人以上视为团队
+         * @param string $team_order 团队内贡献排序
+         * @param string $type 专利类型（发明型、实用型等）
+         * @param string $time 获得时间，非必需
+         * @param string $discuss_score 协商得分，14级以后必填，其他不填
+         * @param string $remark 备注信息
+         * @return boolean 申请成功与否
+         */
         public static function applyInvention($student, $name, $account, $team_num, $team_order, $type, $time,
             $discuss_score, $remark) {
             $item_sql = Impl_Item::getInstance();
             $model = self::inventionModel($student, $name, $account, $team_num, $team_order, $type, $time, $discuss_score, $remark);
-            $rs = $item_sql->auto(self::TABLE_INVENTION)->buildSave($model)->exec();
+            $rs = $item_sql->auto(Comm_T::TABLE_INVENTION)->buildSave($model)->exec();
             $id = $rs[0];
             if (id == 0 || is_null($id)) {
                 return false;
@@ -49,14 +56,28 @@
                 $rs = $db->query($calc_sql, $calc_params);
                 $score = (int) $rs[0]['score'];
             }
-            self::setApply($scholar_type_id, $student, self::TABLE_INVENTION, $id, $score);
+            self::setApply($scholar_type_id, $student, Comm_T::TABLE_INVENTION, $id, $score);
         }
         
+        /**
+         * 科技创新单项：学术论文申请
+         * @param string $student 申请学生
+         * @param string $name 论文名称
+         * @param string $journal 期刊，非必需
+         * @param string $level 发表论文的级别，影响得分计算
+         * @param string $vol 卷号，非必需
+         * @param string $ei_sci 是否被EI、SCI收录
+         * @param string $team_num 团队人数，3人以上视为团队
+         * @param string $team_order 作者顺序
+         * @param string $time 发表时间，非必需
+         * @param string $discuss_score 协商得分
+         * @return boolean
+         */
         public static function applyPaper($student, $name, $journal, $level, $vol, $ei_sci, $team_num,
             $team_order, $time, $discuss_score) {
             $item_sql = Impl_Item::getInstance();
             $model = self::paperModel($student, $name, $journal, $level, $vol, $ei_sci, $team_num, $team_order, $time, $discuss_score);
-            $rs = $item_sql->auto(self::TABLE_PAPER)->buildSave($model)->exec();
+            $rs = $item_sql->auto(Comm_T::TABLE_PAPER)->buildSave($model)->exec();
             $id = $rs[0];
             if (id == 0 || is_null($id)) {
                 return false;
@@ -91,14 +112,14 @@
                 $item_score = $rs[0][0];
                 $score += $item_score['its_score'];
             }
-            return self::setApply($scholar_type_id, $student, self::TABLE_PAPER, $id, $score);
+            return self::setApply($scholar_type_id, $student, Comm_T::TABLE_PAPER, $id, $score);
         }
         
         public static function applyScieTechComp($student, $name, $rate, $prize, $team_status, $team_num,
             $team_order, $host, $time, $remark) {
             $item_sql = Impl_Item::getInstance();
             $model = self::scieTechCompModel($student, $name, $rate, $prize, $team_status, $team_num, $team_order, $host, $time, $remark);
-            $rs = $item_sql->auto(self::TABLE_SCIE_TECH_COMP)->buildSave($model)->exec();
+            $rs = $item_sql->auto(Comm_T::TABLE_SCIE_TECH_COMP)->buildSave($model)->exec();
             $id = $rs[0];
             if (id == 0 || is_null($id)) {
                 return false;
@@ -125,14 +146,14 @@
             $calc_params = array_merge($calc_params, $score_rs['params']);
             $rs = $db->query($calc_sql, $calc_params);
             $score = (int) $rs[0]['score'];
-            return self::setApply($scholar_type_id, $student, self::TABLE_SCIE_TECH_COMP, $id, $score);
+            return self::setApply($scholar_type_id, $student, Comm_T::TABLE_SCIE_TECH_COMP, $id, $score);
         }
         
         public static function applyScieTechProject($student, $name, $rate, $prize, $team_num, $team_order,
             $time, $remark) {
             $item_sql = Impl_Item::getInstance();
             $model = self::scieTechProjectModel($student, $name, $rate, $prize, $team_num, $team_order, $time, $remark);
-            $rs = $item_sql->auto(self::TABLE_SCIE_TECH_PROJECT)->buildSave($model)->exec();
+            $rs = $item_sql->auto(Comm_T::TABLE_SCIE_TECH_PROJECT)->buildSave($model)->exec();
             $id = $rs[0];
             if (id == 0 || is_null($id)) {
                 return false;
@@ -149,39 +170,39 @@
             }
             $item_score = $rs[0][0];
             $score = (int) $item_score['its_score'];
-            return self::setApply($scholar_type_id, $student, self::TABLE_ACTIVITY_ROLE, $id, $score);
+            return self::setApply($scholar_type_id, $student, Comm_T::TABLE_ACTIVITY_ROLE, $id, $score);
         }
         
         public static function delInvention($student, $apply_id) {
-            return self::delApply($student, $apply_id, self::TABLE_INVENTION, 'in_id');
+            return self::delApply($student, $apply_id, Comm_T::TABLE_INVENTION, 'in_id');
         }
         
         public static function delPaper($student, $apply_id) {
-            return self::delApply($student, $apply_id, self::TABLE_PAPER, 'pa_id');
+            return self::delApply($student, $apply_id, Comm_T::TABLE_PAPER, 'pa_id');
         }
         
         public static function delScieTechComp($student, $apply_id) {
-            return self::delApply($student, $apply_id, self::TABLE_SCIE_TECH_COMP, 'stc_id');
+            return self::delApply($student, $apply_id, Comm_T::TABLE_SCIE_TECH_COMP, 'stc_id');
         }
         
         public static function delScieTechProject($student, $apply_id) {
-            return self::delApply($student, $apply_id, self::TABLE_SCIE_TECH_PROJECT, 'stp_id');
+            return self::delApply($student, $apply_id, Comm_T::TABLE_SCIE_TECH_PROJECT, 'stp_id');
         }
         
         public static function getInvention($student, $annual) {
-            return self::getApply($student, $annual, self::TABLE_INVENTION, 'in_id');
+            return self::getApply($student, $annual, Comm_T::TABLE_INVENTION, 'in_id');
         }
         
         public static function getPaper($student, $annual) {
-            return self::getApply($student, $annual, self::TABLE_PAPER, 'pa_id');
+            return self::getApply($student, $annual, Comm_T::TABLE_PAPER, 'pa_id');
         }
         
         public static function getScieTechComp($student, $annual) {
-            return self::getApply($student, $annual, self::TABLE_SCIE_TECH_COMP, 'stc_id');
+            return self::getApply($student, $annual, Comm_T::TABLE_SCIE_TECH_COMP, 'stc_id');
         }
             	
         public static function getScieTechProject($student, $annual) {
-            return self::getApply($student, $annual, self::TABLE_SCIE_TECH_PROJECT, 'stp_id');
+            return self::getApply($student, $annual, Comm_T::TABLE_SCIE_TECH_PROJECT, 'stp_id');
         }
         
         private static function inventionModel($student, $name, $account, $team_num, $team_order, $type, $time,

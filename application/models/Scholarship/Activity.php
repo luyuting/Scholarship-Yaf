@@ -2,16 +2,13 @@
     class Scholarship_ActivityModel {
         use Trait_Scholarship;
         
-        const TABLE_ACTIVITY_COMP = 'tb_activity_comp';
-        const TABLE_ACTIVITY_ROLE = 'tb_activity_role';
-        
         private static $_type = Scholarship_BaseModel::SCHOLAR_ACTIVITY;
         
         public static function applyActivityComp($name, $student, $rate, $prize, $role, $rule, $break,
             $team_num, $time, $remark) {
             $item_sql = Impl_Item::getInstance();
             $model = self::activityCompModel($name, $student, $rate, $prize, $role, $rule, $break, $team_num, $time, $remark);
-            $rs = $item_sql->auto(self::TABLE_ACTIVITY_COMP)->buildSave($model)->exec();
+            $rs = $item_sql->auto(Comm_T::TABLE_ACTIVITY_COMP)->buildSave($model)->exec();
             $id = $rs[0];
             if (id == 0 || is_null($id)) {
                 return false;
@@ -59,13 +56,13 @@
             $calc_sql .= ') score';
             $rs = $db->query($calc_sql, $calc_params);
             $score = (int) $rs[0]['score'];
-            return self::setApply($scholar_type_id, $student, self::TABLE_ACTIVITY_COMP, $id, $score);
+            return self::setApply($scholar_type_id, $student, Comm_T::TABLE_ACTIVITY_COMP, $id, $score);
         }
         
         public static function applyActivityRole($name, $student, $time, $role, $rate, $host, $remark) {
             $item_sql = Impl_Item::getInstance();
             $model = self::activityRoleModel($name, $student, $time, $role, $rate, $host, $remark);
-            $rs = $item_sql->auto(self::TABLE_ACTIVITY_ROLE)->buildSave($model)->exec();
+            $rs = $item_sql->auto(Comm_T::TABLE_ACTIVITY_ROLE)->buildSave($model)->exec();
             $id = $rs[0];
             if (id == 0 || is_null($id)) {
                 return false;
@@ -83,23 +80,23 @@
             }
             $item_score = $rs[0][0];
             $score = (int) $item_score['its_score'];
-            return self::setApply($scholar_type_id, $student, self::TABLE_ACTIVITY_ROLE, $id, $score);
+            return self::setApply($scholar_type_id, $student, Comm_T::TABLE_ACTIVITY_ROLE, $id, $score);
         }
         
         public static function delActivityComp($apply_id) {
-            return self::delApply($apply_id, self::TABLE_ACTIVITY_COMP, 'ac_id');
+            return self::delApply($apply_id, Comm_T::TABLE_ACTIVITY_COMP, 'ac_id');
         }
         
         public static function delActivityRole($apply_id) {
-            return self::delApply($apply_id, self::TABLE_ACTIVITY_ROLE, 'ar_id');
+            return self::delApply($apply_id, Comm_T::TABLE_ACTIVITY_ROLE, 'ar_id');
         }
                
         public static function getActivityComp($student, $annual) {
-            return self::getApply($student, $annual, self::TABLE_ACTIVITY_COMP, 'ac_id');
+            return self::getApply($student, $annual, Comm_T::TABLE_ACTIVITY_COMP, 'ac_id');
         }
         
         public static function getActivityRole($student, $annual) {
-            return self::getApply($student, $annual, self::TABLE_ACTIVITY_ROLE, 'ar_id');
+            return self::getApply($student, $annual, Comm_T::TABLE_ACTIVITY_ROLE, 'ar_id');
         }
         
         private static function activityCompModel($name, $student, $rate, $prize, $role, $rule, $break,

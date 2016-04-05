@@ -7,7 +7,6 @@
          * 考虑教师端导入而非学生手动录入
          * 如果是导入全体成绩是否需要选择人数比例，自动
          */     
-        const TABLE_SCHOLARSHIP = 'tb_scholarship';
         
         public static function applyStudyScholar($student, $scholar_ratio) {
             $annual = date('Y');
@@ -19,17 +18,17 @@
                 'sc_ratio' => $scholar_ratio
             ];
             $item_sql = Impl_Item::getInstance();
-            $rs = $item_sql->auto(self::TABLE_SCHOLARSHIP)->buildQuery($params)->exec();
+            $rs = $item_sql->auto(Comm_T::TABLE_SCHOLARSHIP)->buildQuery($params)->exec();
             if (empty($rs[0])) {
                 return 0;
             }
             $scholar_assoc = $rs[0][0];
             $scholar_type_id = $scholar_assoc['sc_id'];
-            return self::setApply($scholar_type_id, $student, self::TABLE_SCHOLARSHIP, $scholar_type_id, 0);
+            return self::setApply($scholar_type_id, $student, Comm_T::TABLE_SCHOLARSHIP, $scholar_type_id, 0);
         }
         
         public static function getStudyUnique($student, $annual) {
-            return self::getApply($student, $annual, self::TABLE_SCHOLARSHIP, 'sc_id');
+            return self::getApply($student, $annual, Comm_T::TABLE_SCHOLARSHIP, 'sc_id');
         }
 
         public static function delStudyScholar($student, $apply_id) {

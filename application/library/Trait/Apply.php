@@ -1,7 +1,5 @@
 <?php
     trait Trait_Apply {
-        
-        const TABLE_APPLY = 'tb_apply';
                 
         private static function applyModel($scholar_type_id, $student, $item_table, $item_id, $score) {
             $model_card = [
@@ -49,7 +47,7 @@
         private static function setApply($scholar_type_id, $student, $item_table, $item_id, $score) {
             $model = self::applyModel($scholar_type_id, $student, $item_table, $item_id, $score);
             $item_sql = Impl_Item::getInstance();
-            $rs = $item_sql->auto(self::TABLE_APPLY)->buildSave($model)->exec();
+            $rs = $item_sql->auto(Comm_T::TABLE_APPLY)->buildSave($model)->exec();
             if ($rs[0] == 0 || is_null($rs[0])) {
                 return false;
             }

@@ -1,16 +1,14 @@
 <?php
     class Scholarship_PracticeModel {
         use Trait_Scholarship;
-        
-        const TABLE_PRACTICE = 'tb_practice';
-        
+   
         private static $_type = Scholarship_BaseModel::SCHOLAR_PRACTICE;
         
         public static function applyPractice($title, $name, $student, $team_prize, $person_prize,
             $team_role, $remark) {
             $item_sql = Impl_Item::getInstance();
             $model = self::practiceModel($title, $name, $student, $team_prize, $person_prize, $team_role, $remark);
-            $rs = $item_sql->auto(self::TABLE_PRACTICE)->buildSave($model)->exec();
+            $rs = $item_sql->auto(Comm_T::TABLE_PRACTICE)->buildSave($model)->exec();
             $id = $rs[0];
             if (id == 0 || is_null($id)) {
                 return false;
@@ -61,15 +59,15 @@
                     default: $team_role = ''; break;
                 }
             }
-            return self::setApply($scholar_type_id, $student, self::TABLE_PRACTICE, $id, $score);
+            return self::setApply($scholar_type_id, $student, Comm_T::TABLE_PRACTICE, $id, $score);
         }
         
         public static function delPractice($student, $apply_id) {
-            return self::delApply($student, $apply_id, self::TABLE_PRACTICE, 'pr_id');
+            return self::delApply($student, $apply_id, Comm_T::TABLE_PRACTICE, 'pr_id');
         }
         
         public static function getPractice($student, $annual) {
-            return self::getApply($student, $annual, self::TABLE_PRACTICE, 'pr_id');
+            return self::getApply($student, $annual, Comm_T::TABLE_PRACTICE, 'pr_id');
         }
         
         private static function practiceModel($title, $name, $student, $team_prize, $person_prize,

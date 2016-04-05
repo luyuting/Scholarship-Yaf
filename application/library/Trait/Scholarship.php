@@ -2,8 +2,6 @@
     trait Trait_Scholarship {
         use Trait_Apply;
         
-        const TABLE_SCHOLARSHIP = 'tb_scholarship';
-        
         private function __construct() {
             
         }
@@ -34,7 +32,7 @@
                 'sc_type' => self::$_type
             ];
             $item_sql = Impl_Item::getInstance();
-            $rs = $item_sql->auto(self::TABLE_SCHOLARSHIP)->buildQuery($params)->exec();
+            $rs = $item_sql->auto(Comm_T::TABLE_SCHOLARSHIP)->buildQuery($params)->exec();
             if (empty($rs[0])) {
                 return 0;
             }

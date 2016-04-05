@@ -2,16 +2,13 @@
     class Scholarship_WorkModel {
         use Trait_Scholarship;
         
-        const TABLE_WORK_CADRE = 'tb_work_cadre';
-        const TABLE_WORK_REWARD = 'tb_work_reward';
-     
         private static $_type = Scholarship_BaseModel::SCHOLAR_WORK;
         
         public static function applyWorkCadre($level, $last_time, $student, $name, $begin_time,
             $end_time, $remark) {
             $item_sql = Impl_Item::getInstance();
             $model = self::workCadreModel($level, $last_time, $student, $name, $begin_time, $end_time, $remark);
-            $rs = $item_sql->auto(self::TABLE_WORK_CADRE)->buildSave($model)->exec();
+            $rs = $item_sql->auto(Comm_T::TABLE_WORK_CADRE)->buildSave($model)->exec();
             $id = $rs[0];
             if (id == 0 || is_null($id)) {
                 return false;
@@ -45,13 +42,13 @@
                 return false;
             }
             $score =  $level_ratio * $last_time_ratio * ((int) $rs[0]['ws_score']);
-            return self::setApply($scholar_type_id, $student, self::TABLE_WORK_CADRE, $id, $score);
+            return self::setApply($scholar_type_id, $student, Comm_T::TABLE_WORK_CADRE, $id, $score);
         }
         
         public static function applyWorkReward($name, $student, $rate, $time) {
             $item_sql = Impl_Item::getInstance();
             $model = self::workRewardModel($name, $student, $rate, $time);
-            $rs = $item_sql->auto(self::TABLE_WORK_REWARD)->buildSave($model)->exec();
+            $rs = $item_sql->auto(Comm_T::TABLE_WORK_REWARD)->buildSave($model)->exec();
             $id = $rs[0];
             if (id == 0 || is_null($id)) {
                 return false;
@@ -69,23 +66,23 @@
             }
             $item_score = $rs[0][0];
             $score = (int) $item_score['its_score'];
-            return self::setApply($scholar_type_id, $student, self::TABLE_WORK_REWARD, $id, $score);
+            return self::setApply($scholar_type_id, $student, Comm_T::TABLE_WORK_REWARD, $id, $score);
         }
         
         public static function delWorkCadre($student, $apply_id) {
-            return self::delApply($student, $apply_id, self::TABLE_WORK_CADRE, 'wc_id');
+            return self::delApply($student, $apply_id, Comm_T::TABLE_WORK_CADRE, 'wc_id');
         }
         
         public static function delWorkReward($student, $apply_id) {
-            return self::delApply($student, $apply_id, self::TABLE_WORK_REWARD, 'wr_id');
+            return self::delApply($student, $apply_id, Comm_T::TABLE_WORK_REWARD, 'wr_id');
         }
         
         public static function getWorkCadre($student, $annual) {
-            return self::getApply($student, $annual, self::TABLE_WORK_CADRE, 'wc_id');
+            return self::getApply($student, $annual, Comm_T::TABLE_WORK_CADRE, 'wc_id');
         }
     
         public static function getWorkReward($student, $annual) {
-            return self::getApply($student, $annual, self::TABLE_WORK_REWARD, 'wr_id');
+            return self::getApply($student, $annual, Comm_T::TABLE_WORK_REWARD, 'wr_id');
         }
         
         private static function workRewardModel($name, $student, $rate, $time) {
