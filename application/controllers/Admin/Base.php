@@ -88,6 +88,22 @@
             $this->success($info);
         }
         
+        public function getActivityCompAction() {
+            $this->getCompetion(Scholarship_ActivityModel::getType());
+        }
+        
+        public function getScieTechCompAction() {
+            $this->getCompetiton(Scholarship_ScienceModel::getType());
+        }
+        
+        public function setActivityCompAction() {
+            $this->setCompetiton(Scholarship_ActivityModel::getType());
+        }
+        
+        public function setScieTechCompAction() {
+            $this->setCompetiton(Scholarship_ScienceModel::getType());
+        }
+        
         public function addAdminAction() {
             
         }
@@ -124,5 +140,27 @@
                 return;
             }
             $this->success();
+        }
+        
+        private function setCompetiton($type) {
+            $req = $this->getRequest();
+            $name = $req->getPost('name');
+            $rate = $req->getPost('rate');
+            if (!Comm_ArgsCheck::string($name) || !Comm_ArgsCheck::string($rate)) {
+                $this->error(Comm_Const::E_INVALID_PARAM);
+            }
+            $admin_account = $this->getAdmin();
+            $rs = CompetitionModel::setCompetition($name, $rate, $admin_account, $type);
+            if (!$rs) {
+                $this->error(Comm_Const::E_DUPLICATE);
+                return;
+            }
+            $this->success();
+        }
+        
+        private function getCompetion($type) {
+            $admin_account = $this->getAdmin();
+            $info = CompetitionModel::getCompetition($admin_account, $type);
+            $this->success($info);
         }
     }

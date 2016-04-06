@@ -15,4 +15,5 @@
         
         const E_UNKOWN = '10004,Unknown Error';
         const E_INTERNAL = '10005,Internal Error';
+        const E_DUPLICATE = '10006,Duplicate Operation';
     }

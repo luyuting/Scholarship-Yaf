@@ -72,10 +72,10 @@
 
         private static function getList($admin_account, $table, $column, array $order_condition = []) {
             $db = Base_Db::getInstance();
-            $sql = "select user_id, user_name, user_major, user_class, k.*, p.* from tb_apply p.*, tb_user, {$table} k, 
-				tb_scholarship t where t.sc_id = ap_scho_type and user_id = ap_student and (t.sc_grade, t.sc_annual) = 
-				(select ad_grade, ad_annual from tb_admin where ad_account = ? ) and k.{$column} = ap_item_id and 
-                ap_item_table = ? order by ";
+            $sql = "select user_id, user_name, user_major, user_class, k.*, ap_id, ap_scho_type, ap_student, ap_score, 
+                ap_time, ap_state, ap_audit from tb_apply p , tb_user, {$table} k, tb_scholarship t where 
+                t.sc_id = ap_scho_type and user_id = ap_student and (t.sc_grade, t.sc_annual) = (select ad_grade, 
+                ad_annual from tb_admin where ad_account = ? ) and k.{$column} = ap_item_id and ap_item_table = ? order by ";
             if (!empty($order_condition)) {
                 $sql .= implode(', ', $order_condition);
             } else {

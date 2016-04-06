@@ -31,7 +31,7 @@
        
        
         protected final function __construct() {
-           $this->initTable();
+            $this->initTable();
         }
         
         /**

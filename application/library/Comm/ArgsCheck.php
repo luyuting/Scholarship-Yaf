@@ -16,6 +16,10 @@
         const USER_PASS = "/^[\\w]{6,20}$/";  
         // 9位，以201X开头
         const USER_STUDENT_ID = "/^(201)\\d{6}$/";
+        // 年份检查
+        const YEAR = "/^(20)\\d{2}$/";
+        // 日期
+        const DATETIME = "/^\\d{4}-\\d{2}-\\d{2}$/";
         
         public static function string($arg, $preg = self::BASE_STR) {
             if (!is_string($arg)) {
@@ -46,6 +50,10 @@
                 }
             }
             return true;
+        }
+        
+        public static function enum($arg, array $haystack) {
+            return in_array($arg, $haystack);
         }
         
     }

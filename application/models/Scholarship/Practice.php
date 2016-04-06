@@ -10,7 +10,7 @@
             $model = self::practiceModel($title, $name, $student, $team_prize, $person_prize, $team_role, $remark);
             $rs = $item_sql->tAuto(Comm_T::TABLE_PRACTICE)->buildSave($model)->exec();
             $id = $rs[0];
-            if (id == 0 || is_null($id)) {
+            if ($id == 0 || is_null($id)) {
                 return false;
             }
             $scholar_type_id = self::getScholarIdByUser($student);

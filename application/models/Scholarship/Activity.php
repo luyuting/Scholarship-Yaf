@@ -10,9 +10,10 @@
             $model = self::activityCompModel($name, $student, $rate, $prize, $role, $rule, $break, $team_num, $time, $remark);
             $rs = $item_sql->tAuto(Comm_T::TABLE_ACTIVITY_COMP)->buildSave($model)->exec();
             $id = $rs[0];
-            if (id == 0 || is_null($id)) {
+            if ($id == 0 || is_null($id)) {
                 return false;
             }
+            
             $scholar_type_id = self::getScholarIdByUser($student);
             if ($scholar_type_id == 0) {
                 return false;
@@ -55,7 +56,7 @@
             }
             $calc_sql .= ') score';
             $rs = $db->query($calc_sql, $calc_params);
-            $score = (int) $rs[0]['score'];
+            $score = floatval($rs[0]['score']);
             return self::setApply($scholar_type_id, $student, Comm_T::TABLE_ACTIVITY_COMP, $id, $score);
         }
         
@@ -64,7 +65,7 @@
             $model = self::activityRoleModel($name, $student, $time, $role, $rate, $host, $remark);
             $rs = $item_sql->tAuto(Comm_T::TABLE_ACTIVITY_ROLE)->buildSave($model)->exec();
             $id = $rs[0];
-            if (id == 0 || is_null($id)) {
+            if ($id == 0 || is_null($id)) {
                 return false;
             }
             $scholar_type_id = self::getScholarIdByUser($student);
@@ -73,7 +74,7 @@
             }
             // 主持人或演员
             $score_sql = Impl_Score::getInstance();
-            $params = $score_sql->scoreModel($scholar_type_id, '文体活动', $role, '');
+            $params = $score_sql->scoreModel($scholar_type_id, '文体活动', '演员/主持人', '');
             $rs = $score_sql->auto()->buildQuery($params)->exec();
             if (empty($rs[0])) {
                 return false;
@@ -83,12 +84,12 @@
             return self::setApply($scholar_type_id, $student, Comm_T::TABLE_ACTIVITY_ROLE, $id, $score);
         }
         
-        public static function delActivityComp($apply_id) {
-            return self::delApply($apply_id, Comm_T::TABLE_ACTIVITY_COMP, 'ac_id');
+        public static function delActivityComp($student, $apply_id) {
+            return self::delApply($student, $apply_id, Comm_T::TABLE_ACTIVITY_COMP, 'ac_id');
         }
         
-        public static function delActivityRole($apply_id) {
-            return self::delApply($apply_id, Comm_T::TABLE_ACTIVITY_ROLE, 'ar_id');
+        public static function delActivityRole($student, $apply_id) {
+            return self::delApply($student, $apply_id, Comm_T::TABLE_ACTIVITY_ROLE, 'ar_id');
         }
                
         public static function getActivityComp($student, $annual) {

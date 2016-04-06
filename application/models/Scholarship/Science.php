@@ -23,7 +23,7 @@
             $model = self::inventionModel($student, $name, $account, $team_num, $team_order, $type, $time, $discuss_score, $remark);
             $rs = $item_sql->tAuto(Comm_T::TABLE_INVENTION)->buildSave($model)->exec();
             $id = $rs[0];
-            if (id == 0 || is_null($id)) {
+            if ($id == 0 || is_null($id)) {
                 return false;
             }
             $scholar_type_id = self::getScholarIdByUser($student);
@@ -79,7 +79,7 @@
             $model = self::paperModel($student, $name, $journal, $level, $vol, $ei_sci, $team_num, $team_order, $time, $discuss_score);
             $rs = $item_sql->tAuto(Comm_T::TABLE_PAPER)->buildSave($model)->exec();
             $id = $rs[0];
-            if (id == 0 || is_null($id)) {
+            if ($id == 0 || is_null($id)) {
                 return false;
             }
             $scholar_type_id = self::getScholarIdByUser($student);
@@ -121,7 +121,7 @@
             $model = self::scieTechCompModel($student, $name, $rate, $prize, $team_status, $team_num, $team_order, $host, $time, $remark);
             $rs = $item_sql->tAuto(Comm_T::TABLE_SCIE_TECH_COMP)->buildSave($model)->exec();
             $id = $rs[0];
-            if (id == 0 || is_null($id)) {
+            if ($id == 0 || is_null($id)) {
                 return false;
             }
             $scholar_type_id = self::getScholarIdByUser($student);
@@ -155,7 +155,7 @@
             $model = self::scieTechProjectModel($student, $name, $rate, $prize, $team_num, $team_order, $time, $remark);
             $rs = $item_sql->tAuto(Comm_T::TABLE_SCIE_TECH_PROJECT)->buildSave($model)->exec();
             $id = $rs[0];
-            if (id == 0 || is_null($id)) {
+            if ($id == 0 || is_null($id)) {
                 return false;
             }
             $scholar_type_id = self::getScholarIdByUser($student);

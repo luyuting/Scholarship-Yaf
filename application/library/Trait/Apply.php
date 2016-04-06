@@ -8,7 +8,7 @@
                 'ap_item_table' => $item_table,
                 'ap_item_id' => $item_id,
                 'ap_score' => $score,
-                'ap_state' => 0,
+                'ap_state' => '未审核',
                 'ap_audit' => 0
             ];
             return $model_card;
@@ -36,8 +36,9 @@
         
         private static function getApply($student, $annual, $table, $column) {
             $db = Base_Db::getInstance();
-            $sql = "select p.*, k.* from tb_apply p, tb_scholarship t, {$table} k where t.sc_annual = ? 
-                and t.sc_id = ap_scho_type and ap_item_table = ? and ap_student = ? and ap_item_id = 
+            $sql = "select ap_id, ap_scho_type, ap_student, ap_score, ap_time, ap_state, ap_audit, 
+                k.* from tb_apply p, tb_scholarship t, {$table} k where t.sc_annual = ? and 
+                t.sc_id = ap_scho_type and ap_item_table = ? and ap_student = ? and ap_item_id = 
                 k.{$column} order by p.ap_time desc ";
             $params = [$annual, $table, $student];
             return $db->query($sql, $params);

@@ -9,7 +9,7 @@
             $model = self::appraisalModel($student, $ratio);
             $rs = $item_sql->tAuto(Comm_T::TABLE_APPRAISAL)->buildSave($model)->exec();
             $id = $rs[0];
-            if (id == 0 || is_null($id)) {
+            if ($id == 0 || is_null($id)) {
                 return false;
             }
             $scholar_type_id = self::getScholarIdByUser($student);
@@ -33,7 +33,7 @@
             $model = self::dormitoryModel($student, $score);
             $rs = $item_sql->tAuto(Comm_T::TABLE_DORMITORY)->buildSave($model)->exec();
             $id = $rs[0];
-            if (id == 0 || is_null($id)) {
+            if ($id == 0 || is_null($id)) {
                 return false;
             }
             $scholar_type_id = self::getScholarIdByUser($student);
@@ -42,7 +42,7 @@
             }
             // 文明寝室得分系数
             $score_sql = Impl_Score::getInstance();
-            $params = $score_sql->scoreModel($scholar_type_id, '寝室环境建设', '文明寝室', '');
+            $params = $score_sql->scoreModel($scholar_type_id, '寝室环境建设', '文明寝室', '校级');
             $rs = $score_sql->auto()->buildQuery($params)->exec();
             if (empty($rs[0])) {
                 return false;
@@ -57,7 +57,7 @@
             $model = self::spiritualRewarkModel($student, $name, $item, $rate, $time);
             $rs = $item_sql->tAuto(Comm_T::TABLE_SPIRITUAL_REWARD)->buildSave($model)->exec();
             $id = $rs[0];
-            if (id == 0 || is_null($id)) {
+            if ($id == 0 || is_null($id)) {
                 return false;
             }
             $scholar_type_id = self::getScholarIdByUser($student);
@@ -80,7 +80,7 @@
             return self::delApply($student, $apply_id, Comm_T::TABLE_APPRAISAL, 'app_id');
         }
         
-        public static function delDomitory($student, $apply_id) {
+        public static function delDormitory($student, $apply_id) {
             return self::delApply($student, $apply_id, Comm_T::TABLE_DORMITORY, 'do_id');
         }
         
