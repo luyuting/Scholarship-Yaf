@@ -1,57 +1,55 @@
 <?php
-    class AuditModel {  
-        use Trait_Table;
-        
+    class AuditModel {     
         public static function getStudyList($admin_account) {
-            return self::getList($admin_account, self::TABLE_SCHOLARSHIP, 'sc_id', ['user_id desc', 'user_class desc']);
+            return self::getList($admin_account, Comm_T::TABLE_SCHOLARSHIP, 'sc_id', ['user_id desc', 'user_class desc']);
         }
         
         public static function getAppraisalList($admin_account) {
-            return self::getList($admin_account, self::TABLE_APPRAISAL, 'app_id', ['ap_score asc', 'user_id desc']);
+            return self::getList($admin_account, Comm_T::TABLE_APPRAISAL, 'app_id', ['ap_score asc', 'user_id desc']);
         }
         
         public static function getDormitoryList($admin_account) {
-            return self::getList($admin_account, self::TABLE_DORMITORY, 'do_id');
+            return self::getList($admin_account, Comm_T::TABLE_DORMITORY, 'do_id');
         }
         
         public static function getSpiritualRewardList($admin_account) {
-            return self::getList($admin_account, self::TABLE_SPIRITUAL_REWARD, 'spr_id');
+            return self::getList($admin_account, Comm_T::TABLE_SPIRITUAL_REWARD, 'spr_id');
         }
         
         public static function getActivityCompList($admin_account) {
-            return self::getList($admin_account, self::TABLE_ACTIVITY_COMP, 'ac_id');
+            return self::getList($admin_account, Comm_T::TABLE_ACTIVITY_COMP, 'ac_id');
         }
         
         public static function getActivityRoleList($admin_account) {
-            return self::getList($admin_account, self::TABLE_ACTIVITY_ROLE, 'ar_id');
+            return self::getList($admin_account, Comm_T::TABLE_ACTIVITY_ROLE, 'ar_id');
         }
         
         public static function getWorkCadreList($admin_account) {
-            return self::getList($admin_account, self::TABLE_WORK_CADRE, 'wc_id');
+            return self::getList($admin_account, Comm_T::TABLE_WORK_CADRE, 'wc_id');
         }
         
         public static function getWorkRewardList($admin_account) {
-            return self::getList($admin_account, self::TABLE_WORK_REWARD, 'wr_id');
+            return self::getList($admin_account, Comm_T::TABLE_WORK_REWARD, 'wr_id');
         }
         
         public static function getScieTechCompList($admin_account) {
-            return self::getList($admin_account, self::TABLE_SCIE_TECH_COMP, 'stc_id');
+            return self::getList($admin_account, Comm_T::TABLE_SCIE_TECH_COMP, 'stc_id');
         }
         
         public static function getScieTechPaperList($admin_account) {
-            return self::getList($admin_account, self::TABLE_PAPER, 'stp_id');
+            return self::getList($admin_account, Comm_T::TABLE_PAPER, 'stp_id');
         }
         
         public static function getScieTechInventionList($admin_account) {
-            return self::getList($admin_account, self::TABLE_INVENTION, 'in_id');
+            return self::getList($admin_account, Comm_T::TABLE_INVENTION, 'in_id');
         }
         
         public static function getScieTechProjectList($admin_account) {
-            return self::getList($admin_account, self::TABLE_SCIE_TECH_PROJECT, 'stp_id');
+            return self::getList($admin_account, Comm_T::TABLE_SCIE_TECH_PROJECT, 'stp_id');
         }
         
         public static function getPracticeList($admin_account) {
-            return self::getList($admin_account, self::TABLE_PRACTICE, 'pr_id');
+            return self::getList($admin_account, Comm_T::TABLE_PRACTICE, 'pr_id');
         }
         
         public static function auditScholar($apply_id, $admin_account, $state, $remark) {
