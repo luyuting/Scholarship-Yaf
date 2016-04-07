@@ -68,6 +68,23 @@
             $this->scholarItemCheck(Scholarship_WorkModel::getType());
         }
         
+        public function scholarWorkCadreAction() {
+            $req = $this->getRequest();
+            $position = $req->getPost('position');
+            $score = $req->getPost('score');
+            if (!Comm_ArgsCheck::string($position) || !Comm_ArgsCheck::int($score, 0)) {
+                $this->error(Comm_Const::E_INVALID_PARAM);
+                return;
+            }
+            $admin_account = $this->getAdmin();
+            $rs = Scholarship_WorkModel::setWorkScore($admin_account, $position, $score);
+            if (!$rs) {
+                $this->error(Comm_Const::E_UNKOWN);
+                return;
+            }
+            $this->success();
+        }
+        
         public function scholarScienceAction() {
             $this->scholarItemCheck(Scholarship_ScienceModel::getType());
         }
@@ -88,20 +105,27 @@
             $this->success($info);
         }
         
+        public function scholarWorkScoreAction() {
+            $req = $this->getRequest();
+            $admin_account = $this->getAdmin();
+            $info = Scholarship_WorkModel::getWorkScore($admin_account);
+            $this->success($info);
+        }
+        
         public function getActivityCompAction() {
-            $this->getCompetion(Scholarship_ActivityModel::getType());
+            $this->getCompetition(Scholarship_ActivityModel::getType());
         }
         
         public function getScieTechCompAction() {
-            $this->getCompetiton(Scholarship_ScienceModel::getType());
+            $this->getCompetition(Scholarship_ScienceModel::getType());
         }
         
         public function setActivityCompAction() {
-            $this->setCompetiton(Scholarship_ActivityModel::getType());
+            $this->setCompetition(Scholarship_ActivityModel::getType());
         }
         
         public function setScieTechCompAction() {
-            $this->setCompetiton(Scholarship_ScienceModel::getType());
+            $this->setCompetition(Scholarship_ScienceModel::getType());
         }
         
         public function addAdminAction() {
@@ -142,7 +166,7 @@
             $this->success();
         }
         
-        private function setCompetiton($type) {
+        private function setCompetition($type) {
             $req = $this->getRequest();
             $name = $req->getPost('name');
             $rate = $req->getPost('rate');
@@ -158,7 +182,7 @@
             $this->success();
         }
         
-        private function getCompetion($type) {
+        private function getCompetition($type) {
             $admin_account = $this->getAdmin();
             $info = CompetitionModel::getCompetition($admin_account, $type);
             $this->success($info);

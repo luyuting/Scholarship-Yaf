@@ -37,6 +37,6 @@
                 return 0;
             }
             $scholar_assoc = $rs[0][0];
-            return $scholar_assoc['sc_id'];
+            return (int) $scholar_assoc['sc_id'];
         }
     }

@@ -19,6 +19,10 @@
          */
         public static function applyInvention($student, $name, $account, $team_num, $team_order, $type, $time,
             $discuss_score, $remark) {
+            // 3人及以下不视作团队，不用排名
+            if ($team_num <= 3) {
+                $team_order = '';
+            }
             $item_sql = Impl_Item::getInstance();
             $model = self::inventionModel($student, $name, $account, $team_num, $team_order, $type, $time, $discuss_score, $remark);
             $rs = $item_sql->tAuto(Comm_T::TABLE_INVENTION)->buildSave($model)->exec();
@@ -56,7 +60,7 @@
                 $rs = $db->query($calc_sql, $calc_params);
                 $score = (int) $rs[0]['score'];
             }
-            self::setApply($scholar_type_id, $student, Comm_T::TABLE_INVENTION, $id, $score);
+            return self::setApply($scholar_type_id, $student, Comm_T::TABLE_INVENTION, $id, $score);
         }
         
         /**
@@ -71,7 +75,7 @@
          * @param string $team_order 作者顺序
          * @param string $time 发表时间，非必需
          * @param string $discuss_score 协商得分
-         * @return boolean
+         * @return boolean 申请成功与否
          */
         public static function applyPaper($student, $name, $journal, $level, $vol, $ei_sci, $team_num,
             $team_order, $time, $discuss_score) {
@@ -104,7 +108,7 @@
             // 是否被EI、SCI收录
             if ($ei_sci == '是') {
                 $score_sql = Impl_Score::getInstance();
-                $params = $score_sql->scoreModel($scholar_type_id, '科技创新论文', '被EI、SCI收录', '');
+                $params = $score_sql->scoreModel($scholar_type_id, '科技创新论文收录', '被EI、SCI收录', '');
                 $rs = $score_sql->auto()->buildQuery($params, [], [], ['its_score'])->exec();
                 if (empty($rs[0])) {
                     return false;
@@ -115,8 +119,26 @@
             return self::setApply($scholar_type_id, $student, Comm_T::TABLE_PAPER, $id, $score);
         }
         
+        /**
+         * 科技创新单项：科技创新竞赛
+         * @param string $student 申请学生
+         * @param string $name 竞赛名称
+         * @param string $rate 级别
+         * @param string $prize 奖项
+         * @param string $team_status 成员地位：队长、队员
+         * @param string $team_num 团队参赛人数，必填，影响得分计算
+         * @param string $team_order 团队内次序，必填，仅当人数小于等于3时，不视作团队不影响计分
+         * @param string $host 赛事主办方，非必需
+         * @param string $time 获奖时间
+         * @param string $remark 备注信息
+         * @return boolean 申请成功与否
+         */
         public static function applyScieTechComp($student, $name, $rate, $prize, $team_status, $team_num,
             $team_order, $host, $time, $remark) {
+            // 3人及以下不视作团队，不用排名
+            if ($team_num <= 3) {
+                $team_order = '';
+            }
             $item_sql = Impl_Item::getInstance();
             $model = self::scieTechCompModel($student, $name, $rate, $prize, $team_status, $team_num, $team_order, $host, $time, $remark);
             $rs = $item_sql->tAuto(Comm_T::TABLE_SCIE_TECH_COMP)->buildSave($model)->exec();
@@ -149,8 +171,24 @@
             return self::setApply($scholar_type_id, $student, Comm_T::TABLE_SCIE_TECH_COMP, $id, $score);
         }
         
+        /**
+         * 科技创新单项：创新创业项目
+         * @param string $student 申请学生
+         * @param string $name 项目名称
+         * @param string $rate 级别
+         * @param string $prize 项目成果：优、良、中、及格
+         * @param string $team_num 团队人数 
+         * @param string $team_order 团队内次序
+         * @param string $time 获评时间
+         * @param string $remark 备注信息
+         * @return boolean 申请成功与否
+         */
         public static function applyScieTechProject($student, $name, $rate, $prize, $team_num, $team_order,
             $time, $remark) {
+            // 3人及以下不视作团队，不用排名
+            if ($team_num <= 3) {
+                $team_order = '';
+            }
             $item_sql = Impl_Item::getInstance();
             $model = self::scieTechProjectModel($student, $name, $rate, $prize, $team_num, $team_order, $time, $remark);
             $rs = $item_sql->tAuto(Comm_T::TABLE_SCIE_TECH_PROJECT)->buildSave($model)->exec();
@@ -170,7 +208,7 @@
             }
             $item_score = $rs[0][0];
             $score = (int) $item_score['its_score'];
-            return self::setApply($scholar_type_id, $student, Comm_T::TABLE_ACTIVITY_ROLE, $id, $score);
+            return self::setApply($scholar_type_id, $student, Comm_T::TABLE_SCIE_TECH_PROJECT, $id, $score);
         }
         
         public static function delInvention($student, $apply_id) {

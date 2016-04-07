@@ -4,6 +4,17 @@
    
         private static $_type = Scholarship_BaseModel::SCHOLAR_PRACTICE;
         
+        /**
+         * 社会实践单项：社会实践申请
+         * @param string $title 实践活动名称
+         * @param string $name 实践类型
+         * @param string $student 申请学生
+         * @param string $team_prize 如果是团队项目，团队获得奖励
+         * @param string $person_prize 个人获得奖励
+         * @param string $team_role 团队中角色：队长、队员 ；影响计分
+         * @param string $remark 备注信息
+         * @return boolean 申请成功与否
+         */
         public static function applyPractice($title, $name, $student, $team_prize, $person_prize,
             $team_role, $remark) {
             // 不从数据库中读取规则

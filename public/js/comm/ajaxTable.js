@@ -91,7 +91,7 @@ function rateStr(name) {
 			if(count != 0) {
 				rateStr += '，';
 			}
-			rateStr += objArr[i].value;
+			rateStr += checkboxArr[i].value;
 			count ++;
 		}
 	}

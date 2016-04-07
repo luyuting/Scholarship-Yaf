@@ -19,7 +19,11 @@
         // 年份检查
         const YEAR = "/^(20)\\d{2}$/";
         // 日期
-        const DATETIME = "/^\\d{4}-\\d{2}-\\d{2}$/";
+        const DATE = "/^\\d{4}-\\d{2}-\\d{2}$/";
+        // 比率
+        const RATIO = "/^\\d{1,3}%$/";
+        // 比率区间
+        const RATIO_INTERVAL = "/^\\d{1,2}%?-\\d{1,3}%$/";
         
         public static function string($arg, $preg = self::BASE_STR) {
             if (!is_string($arg)) {
@@ -43,8 +47,8 @@
         public static function float(&$arg, $min = null, $max = null, $default = null) {
             is_numeric($arg) && $arg = floatval($arg);
             if (!is_float($arg) || (!is_null($min) && $arg < $min) || (!is_null($max) && $arg > $max)) {
-                if (is_float($default)) {
-                    $arg = $default;
+                if (is_numeric($default)) {
+                    $arg = floatval($default);
                 } else {
                     return false;
                 }

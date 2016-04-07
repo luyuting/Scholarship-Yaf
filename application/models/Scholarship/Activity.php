@@ -4,6 +4,20 @@
         
         private static $_type = Scholarship_BaseModel::SCHOLAR_ACTIVITY;
         
+        /**
+         * 文体活动单项：文体竞赛
+         * @param string $name 竞赛名称
+         * @param string $student 申请学生
+         * @param string $rate 竞赛级别
+         * @param string $prize 获得奖项等级
+         * @param string $role 角色：队员、替补队员，必填，影响记分
+         * @param string $rule 加分规则，是否最高分，同一比赛获得多个级别奖项只允许一项记全分（最高分），其他减半
+         * @param string $break 是否打破记录，主要针对体育类竞赛
+         * @param string $team_num 所在团队人数
+         * @param string $time 获奖时间
+         * @param string $remark 备注信息
+         * @return boolean 申请成功与否
+         */
         public static function applyActivityComp($name, $student, $rate, $prize, $role, $rule, $break,
             $team_num, $time, $remark) {
             $item_sql = Impl_Item::getInstance();
@@ -60,6 +74,17 @@
             return self::setApply($scholar_type_id, $student, Comm_T::TABLE_ACTIVITY_COMP, $id, $score);
         }
         
+        /**
+         * 文体活动单项：活动担任主持人/演员
+         * @param string $name 活动名称
+         * @param string $student 申请学生
+         * @param string $time 活动时间
+         * @param string $role 角色
+         * @param string $rate 活动级别
+         * @param string $host 主办方
+         * @param string $remark 备注信息
+         * @return boolean 申请成功与否
+         */
         public static function applyActivityRole($name, $student, $time, $role, $rate, $host, $remark) {
             $item_sql = Impl_Item::getInstance();
             $model = self::activityRoleModel($name, $student, $time, $role, $rate, $host, $remark);

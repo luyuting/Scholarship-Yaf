@@ -4,6 +4,12 @@
            
         private static $_type = Scholarship_BaseModel::SCHOLAR_SPIRITUAL;
         
+        /**
+         * 精神文明单项：民主评议申请
+         * @param string $student 申请学生
+         * @param string $ratio 排名比率
+         * @return boolean 申请成功与否
+         */
         public static function applyAppraisal($student, $ratio) {
             $item_sql = Impl_Item::getInstance();
             $model = self::appraisalModel($student, $ratio);
@@ -28,6 +34,12 @@
             return self::setApply($scholar_type_id, $student, Comm_T::TABLE_APPRAISAL, $id, $score);
         }
         
+        /**
+         * 精神文明单项：文明寝室申请
+         * @param string $student 申请学生
+         * @param string $score 寝室分数 
+         * @return boolean 申请成功与否
+         */
         public static function applyDormitory($student, $score) {
             $item_sql = Impl_Item::getInstance();
             $model = self::dormitoryModel($student, $score);
@@ -52,6 +64,15 @@
             return self::setApply($scholar_type_id, $student, Comm_T::TABLE_DORMITORY, $id, $score);
         }
         
+        /**
+         * 精神文明单项：精神文明奖励申请
+         * @param string $student 申请学生
+         * @param string $name 奖励类型
+         * @param string $item 奖励具体名称
+         * @param string $rate 级别
+         * @param string $time 获奖时间
+         * @return boolean 申请成功与否
+         */
         public static function applySpiritualReward($student, $name, $item, $rate, $time) {
             $item_sql = Impl_Item::getInstance();
             $model = self::spiritualRewarkModel($student, $name, $item, $rate, $time);

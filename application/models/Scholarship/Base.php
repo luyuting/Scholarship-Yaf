@@ -44,7 +44,7 @@
                 ad_grade from tb_admin where ad_account = ?) and sc_type = ? ';
             $params = [$admin_account, $type];
             $res = $db->query($sql, $params);
-            return empty($res)? 0: $res[0]['sc_id'];
+            return empty($res)? 0: (int) $res[0]['sc_id'];
         }
         
         public static function getScholarItemScore($admin_account, $name) {

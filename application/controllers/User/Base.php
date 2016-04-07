@@ -5,7 +5,7 @@
         public function applyStudyAction() {
             $req = $this->getRequest();
             $ratio = $req->getPost('ratio');
-            if (!Comm_ArgsCheck::string($ratio, '/^\\d{1,}%$/')) {
+            if (!Comm_ArgsCheck::string($ratio, Comm_ArgsCheck::RATIO)) {
                 $this->error(Comm_Const::E_INVALID_PARAM);
                 return;
             }
@@ -35,7 +35,7 @@
         public function applyAppraisalAction() {
             $req = $this->getRequest();
             $ratio = $req->getPost('ratio');
-            if (!Comm_ArgsCheck::string($ratio, '/^\\d{1,}-\\d{1,}%$/')) {
+            if (!Comm_ArgsCheck::string($ratio, Comm_ArgsCheck::RATIO_INTERVAL)) {
                 $this->error(Comm_Const::E_INVALID_PARAM);
                 return;
             }
@@ -98,7 +98,7 @@
             $time = $req->getPost('time');
             if (!Comm_ArgsCheck::string($name) || !Comm_ArgsCheck::string($item) 
                 || !Comm_ArgsCheck::string($rate, Comm_ArgsCheck::BASE_EMPTY_STR)
-                || !Comm_ArgsCheck::string($time, Comm_ArgsCheck::DATETIME)) {
+                || !Comm_ArgsCheck::string($time, Comm_ArgsCheck::DATE)) {
                 $this->error(Comm_Const::E_INVALID_PARAM);
                 return;
             }
@@ -132,7 +132,7 @@
             $remark = $req->getPost('remark');
             if (!Comm_ArgsCheck::string($name) || !Comm_ArgsCheck::string($rate) || !Comm_ArgsCheck::string($prize)
                 || !Comm_ArgsCheck::string($role) || !Comm_ArgsCheck::string($rule) || !Comm_ArgsCheck::string($break)
-                || !Comm_ArgsCheck::int($team_num) || !Comm_ArgsCheck::string($time, Comm_ArgsCheck::DATETIME)
+                || !Comm_ArgsCheck::int($team_num) || !Comm_ArgsCheck::string($time, Comm_ArgsCheck::DATE)
                 || !Comm_ArgsCheck::string($remark, Comm_ArgsCheck::BASE_EMPTY_STR)) {
                 $this->error(Comm_Const::E_INVALID_PARAM);
                 return;
@@ -163,7 +163,7 @@
             $time = $req->getPost('time');
             $remark = $req->getPost('remark');
             if (!Comm_ArgsCheck::string($name) || !Comm_ArgsCheck::string($rate) || !Comm_ArgsCheck::string($role) 
-                || !Comm_ArgsCheck::string($host, Comm_ArgsCheck::BASE_EMPTY_STR) || !Comm_ArgsCheck::string($time, Comm_ArgsCheck::DATETIME)
+                || !Comm_ArgsCheck::string($host, Comm_ArgsCheck::BASE_EMPTY_STR) || !Comm_ArgsCheck::string($time, Comm_ArgsCheck::DATE)
                 || !Comm_ArgsCheck::string($remark, Comm_ArgsCheck::BASE_EMPTY_STR)) {
                 $this->error(Comm_Const::E_INVALID_PARAM);
                 return;
@@ -194,8 +194,8 @@
             $end_time = $req->getPost('end_time');
             $remark = $req->getPost('remark');
             if (!Comm_ArgsCheck::string($level) || !Comm_ArgsCheck::enum($last_time, ['一学年', '一学期'])
-                || !Comm_ArgsCheck::string($name) || !Comm_ArgsCheck::string($begin_time, Comm_ArgsCheck::DATETIME)
-                || !Comm_ArgsCheck::string($end_time, Comm_ArgsCheck::DATETIME) || 
+                || !Comm_ArgsCheck::string($name) || !Comm_ArgsCheck::string($begin_time, Comm_ArgsCheck::DATE)
+                || !Comm_ArgsCheck::string($end_time, Comm_ArgsCheck::DATE) || 
                 !Comm_ArgsCheck::string($remark, Comm_ArgsCheck::BASE_EMPTY_STR)) {
                 $this->error(Comm_Const::E_INVALID_PARAM);
                 return;
@@ -222,7 +222,11 @@
             $name = $req->getPost('name');
             $rate = $req->getPost('rate');
             $time = $req->getPost('time');
-            
+            if (!Comm_ArgsCheck::string($name) || !Comm_ArgsCheck::string($rate) ||
+                !Comm_ArgsCheck::string($time, Comm_ArgsCheck::DATE)) {
+                $this->error(Comm_Const::E_INVALID_PARAM);
+                return;
+            }
             $user_id = $this->getUser();
             $rs = Scholarship_WorkModel::applyWorkReward($name, $user_id, $rate, $time);
             if (!$rs) {
@@ -253,8 +257,8 @@
             $remark = $req->getPost('remark');
             if (!Comm_ArgsCheck::string($name) || !Comm_ArgsCheck::string($rate) || !Comm_ArgsCheck::string($prize)
                 || !Comm_ArgsCheck::enum($team_status, ['队长', '队员']) || !Comm_ArgsCheck::int($team_num, 1, null, 1)
-                || !Comm_ArgsCheck::string($team_order) || !Comm_ArgsCheck::string($host, Comm_ArgsCheck::BASE_EMPTY_STR)
-                || !Comm_ArgsCheck::string($time, Comm_ArgsCheck::DATETIME)) {
+                || !Comm_ArgsCheck::string($team_order, Comm_ArgsCheck::RATIO_INTERVAL) || !Comm_ArgsCheck::string($host, Comm_ArgsCheck::BASE_EMPTY_STR)
+                || !Comm_ArgsCheck::string($time, Comm_ArgsCheck::DATE)) {
                 $this->error(Comm_Const::E_INVALID_PARAM);
                 return;
             }
@@ -268,11 +272,11 @@
         }
         
         public function delScieTechCompAction() {
-            $this->delScholarItem(['Scholarship_ScienceModel', 'delSienTechComp']);
+            $this->delScholarItem(['Scholarship_ScienceModel', 'delScieTechComp']);
         }
         
         public function getScieTechCompAction() {
-            $this->getScholarItem(['Scholarship_ScienceModel', 'getSienTechComp']);
+            $this->getScholarItem(['Scholarship_ScienceModel', 'getScieTechComp']);
         }
         // 科技创新论文
         public function applyPaperAction() {
@@ -290,7 +294,7 @@
                 || !Comm_ArgsCheck::string($level) || !Comm_ArgsCheck::string($vol, Comm_ArgsCheck::BASE_EMPTY_STR)
                 || !Comm_ArgsCheck::enum($ei_sci, ['是', '否'])
                 || !Comm_ArgsCheck::int($team_num, 1, null, 1) || !Comm_ArgsCheck::string($team_order)
-                || !Comm_ArgsCheck::string($time, Comm_ArgsCheck::DATETIME) || !Comm_ArgsCheck::float($discuss_score, 0)) {
+                || !Comm_ArgsCheck::string($time, Comm_ArgsCheck::DATE) || !Comm_ArgsCheck::float($discuss_score, 0, null, 0)) {
                 $this->error(Comm_Const::E_INVALID_PARAM);
                 return;
             }
@@ -322,8 +326,8 @@
             $discuss_score = $req->getPost('discuss_score');
             $remark = $req->getPost('remark');
             if (!Comm_ArgsCheck::string($name) || !Comm_ArgsCheck::string($account) || !Comm_ArgsCheck::string($type)
-                || !Comm_ArgsCheck::int($team_num, 1, null, 1) || !Comm_ArgsCheck::string($team_order)
-                || !Comm_ArgsCheck::string($time, Comm_ArgsCheck::DATETIME) || !Comm_ArgsCheck::float($discuss_score, 0)
+                || !Comm_ArgsCheck::int($team_num, 1, null, 1) || !Comm_ArgsCheck::string($team_order, Comm_ArgsCheck::RATIO_INTERVAL)
+                || !Comm_ArgsCheck::string($time, Comm_ArgsCheck::DATE) || !Comm_ArgsCheck::float($discuss_score, 0, null, 0)
                 || !Comm_ArgsCheck::string($remark, Comm_ArgsCheck::BASE_EMPTY_STR)) {
                     $this->error(Comm_Const::E_INVALID_PARAM);
                     return;
@@ -356,7 +360,7 @@
             $remark = $req->getPost('remark');
             if (!Comm_ArgsCheck::string($name) || !Comm_ArgsCheck::string($rate) || !Comm_ArgsCheck::string($prize)
                 || !Comm_ArgsCheck::int($team_num, 1, null, 1) || !Comm_ArgsCheck::string($team_order)
-                || !Comm_ArgsCheck::string($time, Comm_ArgsCheck::DATETIME) 
+                || !Comm_ArgsCheck::string($time, Comm_ArgsCheck::DATE) 
                 || !Comm_ArgsCheck::string($remark, Comm_ArgsCheck::BASE_EMPTY_STR)) {
                 $this->error(Comm_Const::E_INVALID_PARAM);
                 return;
@@ -371,11 +375,11 @@
         }
         
         public function delScieTechProjectAction() {
-            $this->delScholarItem(['Scholarship_ScienceModel', 'delSienTechProject']);
+            $this->delScholarItem(['Scholarship_ScienceModel', 'delScieTechProject']);
         }
         
         public function getScieTechProjectAction() {
-            $this->getScholarItem(['Scholarship_ScienceModel', 'getSienTechProject']);
+            $this->getScholarItem(['Scholarship_ScienceModel', 'getScieTechProject']);
         }
         // 社会实践
         public function applyPracticeAction() {
