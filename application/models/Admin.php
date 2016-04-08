@@ -23,14 +23,17 @@
            $res = $mc->set($cache_config, $cache_params, function() use ($model) {
                $admin_sql = Impl_Admin::getInstance();
                $rs = $admin_sql->auto()->bulidSave($model)->exec();
-               if ($rs[0] == 0 || is_null($rs[0])) {
+               $id = $rs[0];
+               if ($id == 0 || is_null($id)) {
                    return null;
-               } else {
-                   return $model;
                }
+               $query_rs = $admin_sql->auto()->buildQuery(['ad_id' => $id])->exec();
+               if (empty($query_rs[0])) {
+                   return null;
+               }
+               return $query_rs[0][0];
            });
-           // 设置操作记录
-           
+           // 设置操作记录    
         }
         
         public static function getAdmin() {

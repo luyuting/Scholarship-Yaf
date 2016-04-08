@@ -1,7 +1,7 @@
 <?php
     class AuditModel {     
         public static function getStudyList($admin_account) {
-            return self::getList($admin_account, Comm_T::TABLE_SCHOLARSHIP, 'sc_id', ['user_id desc', 'user_class desc']);
+            return self::getList($admin_account, Comm_T::TABLE_SCHOLARSHIP, 'sc_id', ['user_id asc', 'user_class desc']);
         }
         
         public static function getAppraisalList($admin_account) {
@@ -36,11 +36,11 @@
             return self::getList($admin_account, Comm_T::TABLE_SCIE_TECH_COMP, 'stc_id');
         }
         
-        public static function getScieTechPaperList($admin_account) {
+        public static function getPaperList($admin_account) {
             return self::getList($admin_account, Comm_T::TABLE_PAPER, 'stp_id');
         }
         
-        public static function getScieTechInventionList($admin_account) {
+        public static function getInventionList($admin_account) {
             return self::getList($admin_account, Comm_T::TABLE_INVENTION, 'in_id');
         }
         
