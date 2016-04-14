@@ -1,82 +1,6 @@
 /**
  * 
  */
-$(function() {
-	// 用专利发明部分进行测试
-	applySet({
-		id : 'invention',
-		title : '专利发明',
-		tHead : ['专利名称', '专利类别', '获批时间', '专利号', '排名', '分数', '审核状态'],
-		tBody : ['ap_id', 'in_name', 'in_type', 'in_time', 'in_account', 'in_team_order', 'ap_score', 'ap_state'],
-		params : [{
-			name : 'name',
-			display : '名称',
-			type : 'input',
-			value : '名称',
-		}, {
-			name : 'account',
-			display : '专利号',
-			type : 'input',
-			value : '专利号'
-		}, {
-			name : 'team_num',
-			display : '团队人数',
-			type : 'input',
-			value : '团队人数',
-			regex : /^\d{1,}$/
-		}, {
-			name : 'time',
-			display : '获批时间',
-			type : 'date',
-			value : '年-月-日'
-		}, {
-			name : 'team_order',
-			display : '组内排序',
-			type : 'select',
-			value : ['0-25%', '26%-75%','76%-100%']
-		}, {
-			name : 'type',
-			display : '专利类别',
-			type : 'select',
-			value : [{
-			    	k : '发明型专利', 
-			    	v : '发明型专利'
-			    }, {
-			    	k : '实用型专利', 
-			    	v : '实用型专利'
-			    }, {
-			    	k : '外观型专利', 
-			    	v : '外观型专利'
-			    }]
-		}, {
-			name : 'discuss_score',
-			display : '协商得分',
-			type : 'input',
-			value : '2014级及以后需填写',
-			regex : /^\s*|\d{1,}$/
-		}, {
-			name : 'remark',
-			display : '备注',
-			type : 'textarea',
-			value : '备注信息',
-			required : false
-		}, {
-			// 二级联动菜单 测试
-			name : 'first, second, third',
-			display : 'first, second, third',
-			type : 'assoc-select',
-			value : [[
-			    'first-1',
-			    ['second-1', 'second-2'],
-			    ['third-1', 'third-2']
-			], [
-			    'first-2',
-			    ['second-3', 'second-4'],
-			    ['third-3', 'third-4']
-			]]
-		}]
-	});
-});
 function applySet(options) {
 	var _id = options['id'];
 	var _title = options['title'];
@@ -129,6 +53,7 @@ function applySet(options) {
 		}
 		$.post(requestUri, params, function(data, status) {
 			if (data.code == 10000) {
+				$('#' + _id + '_form')[0].reset();
 				_get();
 			}
 		}, 'json');
@@ -196,19 +121,19 @@ function applySet(options) {
 	};
 	
 	var _applyArea = $('<div></div>').addClass('container apply');
-	var _applyForm = $('<form></form>');
+	var _applyForm = $('<form></form>').attr('id', _id + '_form');
 	_applyArea.append(_applyForm);
 	var _applyParams = [];
 	var _init = function() {
 		var baseEmpty = /^[^<|>|;|\\?|\\||'|&]*$/;
 		var base = /^[^<|>|;|\\?|\\||'|&]+$/;
 		var len = _params.length;
-		for (var i = 0; i < len; i ++) {	
-			var name = _params[i]['name'].trim();
-			var display = _params[i]['display'];
-			var type = _params[i]['type'];
-			var regex = _params[i]['regex'] || ((_params[i]['required'] === false)? baseEmpty: base);
-			var value = _params[i]['value'];
+		var initParam = function(param) {
+			var name = param['name'].trim();
+			var display = param['display'];
+			var type = param['type'];
+			var regex = param['regex'] || ((param['required'] === false)? baseEmpty: base);
+			var value = param['value'];
 			if (type != 'assoc-select') {
 				var id = _id + '_' + name;
 				var item = $('<div></div>');
@@ -270,6 +195,9 @@ function applySet(options) {
 					}
 				}).trigger('change');
 			}
+		};
+		for (var i = 0; i < len; i ++) {	
+			initParam(_params[i]);
 		}
 		_applyForm.append($('<button type="button"></button>').text('确认'))
 			.append($('<button type="button"></button>').text('取消'));
