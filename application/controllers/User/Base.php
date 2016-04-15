@@ -28,7 +28,7 @@
             $this->delScholarItem($func);
         }
         // 检查当年是否已经申请过学习奖学金
-        public function studyUniqueAction() {
+        public function getStudyAction() {
             $this->getScholarItem(['Scholarship_StudyModel', 'getStudyUnique']);
         }
         // 申请民主评议单项
@@ -64,7 +64,7 @@
         public function applyDormitoryAction() {
             $req = $this->getRequest();
             $score = $req->getPost('score');
-            if (!Comm_ArgsCheck::int($score, 0, 10)) {
+            if (!Comm_ArgsCheck::float($score, 0, 10)) {
                 $this->error(Comm_Const::E_INVALID_PARAM);
                 return;
             }

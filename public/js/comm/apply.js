@@ -15,7 +15,7 @@ function applySet(options) {
 		var requestUri = _baseUri + 'get' + _id;
 		$.post(requestUri, {}, function(data, status) {
 			var bodyArr = data.data;
-			$('#' + _id + '_check')[0].checked = false;
+			$('#' + _id + '_check').find('input[type="checkbox"]')[0].checked = false;
 			_setTBody(bodyArr);
 		}, 'json'); 
 	};
@@ -53,8 +53,9 @@ function applySet(options) {
 		}
 		$.post(requestUri, params, function(data, status) {
 			if (data.code == 10000) {
-				$('#' + _id + '_form')[0].reset();
+				$('#' + _id + '_form').empty();
 				_get();
+				_init();
 			}
 		}, 'json');
 	};
@@ -167,6 +168,7 @@ function applySet(options) {
 				_applyParams.push({name : name, regex : regex, id : id});
 				_applyForm.append(item);
 			} else {
+				var rate = param['rate'] || 2;
 				var nameArr = name.split(',');
 				var displayArr = display.split(',');
 				var selects = [];
@@ -174,12 +176,57 @@ function applySet(options) {
 					var item = $('<div></div>');
 					var id = _id + '_' + nameArr[k].trim();
 					item.append($('<label></label>').text(displayArr[k].trim()));
-					var select = $('<select></select>').attr('id', id);
+					var select = $('<select></select>').attr('id', id).attr('index', k);
 					item.append(select);
 					selects.push(select);
+					regex = baseEmpty;
 					_applyForm.append(item);
 					_applyParams.push({name : nameArr[k].trim(), regex : regex, id : id});
 				}
+				for (var j = 0; j < value.length; j ++) {
+					selects[0].append($('<option></option>').text(value[j][0]).val(value[j][0]));
+				}
+				for (var n = 1; n < rate - 1; n ++) {
+					var deepVal = value[0][n];
+					for (var count = n - 1; count > 0; count --) {
+						deepVal = deepVal[0];
+					}
+					for (var j = 0; j < deepVal.length; j ++) {
+						selects[n].append($('<option></option>').text(deepVal[j]).val(deepVal[j]));
+					}
+				}
+				var chain = [];
+				for (var n = 0; n < rate - 1; n ++) {
+					selects[n].bind('change', function() {
+						var index = $(this)[0].selectedIndex;
+						var self = parseInt($(this).attr('index'));
+						chain[self] = index;
+						var optionArr = value[chain[0]];
+						if (self != rate - 2) {
+							selects[self + 1].empty();
+							var depthVal = optionArr[self + 1];
+							for (var dep = 1; dep <= self; dep ++) {
+								depthVal = depthVal[chain[dep]];
+							}
+							for (var j = 0; j < depthVal.length; j ++) {
+								selects[self + 1].append($('<option></option>').text(depthVal[j]).val(depthVal[j]));
+							}
+							selects[self + 1].trigger('change');
+						} else {
+							for (var j = self + 1; j < optionArr.length; j ++) {
+								selects[j].empty();
+								var vals = optionArr[self + 1];
+								for (var dep = 1; dep <= self; dep ++) {
+									vals = vals[chain[dep]];
+								}
+								for (var k = 0; k < vals.length; k ++) {
+									selects[j].append($('<option></option>').text(vals[k]).val(vals[k]));
+								}
+							}
+						}
+					}).trigger('change');
+				}
+				/*
 				for (var j = 0; j < value.length; j ++) {
 					selects[0].append($('<option></option>').text(value[j][0]).val(value[j][0]));
 				}
@@ -193,7 +240,7 @@ function applySet(options) {
 							selects[j].append($('<option></option>').text(opv).val(opv));
 						}
 					}
-				}).trigger('change');
+				}).trigger('change');*/
 			}
 		};
 		for (var i = 0; i < len; i ++) {	

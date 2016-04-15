@@ -13,11 +13,10 @@ $(function() {
 			for (var i = 0; i < len; i ++) {
 				listData.push([list[i]['cp_name'], list[i]['cp_rate'].split('，')]);
 			}
-			console.log(listData);
 		}
 		init();
 	}, 'json');
-})
+});
 var init = function() {
 	var order = ['0-25%', '26%-75%','76%-100%'];
 	// 科创竞赛
@@ -170,7 +169,7 @@ var init = function() {
 			display : '协商得分',
 			type : 'input',
 			value : '2014级及以后需填写',
-			regex : /^\s*|\d+\.?\d*$/
+			regex : /^(\s*|\d+(\.\d*)?)$/
 		}, {
 			name : 'remark',
 			display : '备注',
@@ -224,4 +223,4 @@ var init = function() {
 			required : false
 		}]
 	});
-}
+};
