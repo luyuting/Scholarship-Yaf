@@ -5,7 +5,7 @@ $(function() {
 	init();
 });
 
-var init = function() {
+function init() {
 	applySet({
 		id : 'study',
 		title : '学习优秀',

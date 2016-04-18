@@ -59,14 +59,22 @@ function applySet(options) {
 			}
 		}, 'json');
 	};
-	
+	// update
+	var _update = function() {
+		$.post(_baseUri + 'del' + _id, {apply_id : _applyForm.attr('apply_id')}, function(data, status) {
+			if (data.code == 10000) {
+				_apply();
+			}
+		}, 'json');
+		
+	}
 	var _div = $('<div></div>').attr('id', _id).addClass('apply-div')
 		.append($('<span></span>').text(_title))
-		.append($('<img src="image/add.jpg"/>').bind('click', _apply));
+		.append($('<img src="/img/add.jpg"/>').bind('click', _apply));
 	var _table = $('<table></table>').addClass('apply-table');
 	var _thead = $('<thead></thead>');
 	var _tbody = $('<tbody></tbody>');
-	var _operate = $('<div></div>').addClass('operate-div').append($('<img src="image/arrow.png" />'));
+	var _operate = $('<div></div>').addClass('operate-div').append($('<img src="/img/arrow.png" />'));
 	var _checkAll = $('<span></span>').addClass('table-operate').attr('id', _id + '_check').bind('click', function() {
 		// 全选操作
 		var e = window.event || arguments.callee.caller.arguments[0];
@@ -79,7 +87,7 @@ function applySet(options) {
 			$(this)[0].checked = checkbox.checked;
 		});
 	}).append($('<input type="checkbox"/>')).append('全选').attr('title', '全选');
-	var _delete = $('<span></span>').addClass('table-operate').bind('click', _del).append($('<img src="image/delete.png"/>')).append('删除').attr('title', '删除');
+	var _delete = $('<span></span>').addClass('table-operate').bind('click', _del).append($('<img src="/img/delete.png"/>')).append('删除').attr('title', '删除');
 	_table.append(_thead).append(_tbody);
 	_operate.append(_checkAll).append(_delete);
 	_div.append(_table).append(_operate);
@@ -114,8 +122,17 @@ function applySet(options) {
 					var inp = $('<input type="checkbox"/>').attr('name', _id + '_operate').val(cols[_tBody[0]]);
 					td.append(inp);
 				} else {
-					td.val(cols[_tBody[0]]).text(cols[_tBody[i]]).click(function() {});
-
+					td.val(cols[_tBody[0]]).text(cols[_tBody[i]]).click(function() {
+						var indexRow = $(this).parent().index();
+						var trVal = bodyArr[indexRow];
+						for (var k in trVal) {
+							if (k.indexOf('ap_') == -1) {
+								name = k.substr(k.indexOf('_') + 1);
+								_applyForm.attr('apply_id', $(this).val()).find('[id$=' + name + ']').val(trVal[k]).trigger('change').end()
+									.find('button').eq(0).text('修改').on('click', _update);
+							}
+						}
+					});
 				}
 			}
 		}
@@ -215,7 +232,7 @@ function applySet(options) {
 						} else {
 							for (var j = self + 1; j < optionArr.length; j ++) {
 								selects[j].empty();
-								var vals = optionArr[self + 1];
+								var vals = optionArr[j];
 								for (var dep = 1; dep <= self; dep ++) {
 									vals = vals[chain[dep]];
 								}
@@ -246,14 +263,21 @@ function applySet(options) {
 		for (var i = 0; i < len; i ++) {	
 			initParam(_params[i]);
 		}
-		_applyForm.append($('<button type="button"></button>').text('确认'))
+		_applyForm.append($('<button type="button"></button>').text('确认').on('click', function() {
+			console.log('hehe');
+		}))
 			.append($('<button type="button"></button>').text('取消'));
 		_div.append(_applyArea);
 	};
 	_init();
 	// test
 	
-	$('body').append(_div);
+	var _appendArea = $('div.apply_area');
+	if (!_appendArea) {
+		$('<div></div>').addClass('apply_area');
+		$('body').append(_appendArea);
+	}
+	$(_appendArea).append(_div);
 	// 初始化表格数据
 	_get();
 }

@@ -17,7 +17,7 @@ $(function() {
 		init();
 	}, 'json');
 });
-var init = function() {
+function init() {
 	applySet({
 		id : 'activitycomp',
 		title : '文体竞赛',

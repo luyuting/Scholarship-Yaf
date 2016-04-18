@@ -1,12 +1,13 @@
 /**
  * 
  */
+var listData = [];
 $(function() {
 	practiceData();
 	init();
 });
 
-var init = function() {
+function init() {
 	applySet({
 		id : 'practice', 
 		title : '社会实践', 
@@ -32,9 +33,7 @@ var init = function() {
 		}]
 	});
 };
-
-var listData = [];
-var practiceData = function() {
+function practiceData() {
 	listData.push(['社区挂职', ['暂无可选项'], ['先进个人', '锻炼标兵', '未获得奖项'], ['暂无可选项']]);
 	listData.push(['优秀志愿者', ['暂无可选项'], ['国家级', '省级', '市级', '校级', '学部（学院）级', '暂无可选项']]);
 	listData.push(['寒假社会调查', ['暂无可选项'], ['个人调查报告一等奖', '个人调查报告二等奖', '个人调查报告三等奖'], ['暂无可选项']]);

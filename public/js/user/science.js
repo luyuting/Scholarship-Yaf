@@ -17,7 +17,7 @@ $(function() {
 		init();
 	}, 'json');
 });
-var init = function() {
+function init() {
 	var order = ['0-25%', '26%-75%','76%-100%'];
 	// 科创竞赛
 	applySet({

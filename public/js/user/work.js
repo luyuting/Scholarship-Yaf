@@ -1,11 +1,12 @@
 /**
  * 
  */
+var cadreArr = [];
 $(function() {
 	cadre();
 	init();
 });
-var init = function() {
+function init() {
 	applySet({
 		id : 'workcadre',
 		title : '社会工作',
@@ -67,8 +68,7 @@ var init = function() {
 		}]
 	});
 };
-var cadreArr = [];
-var cadre = function() {
+function cadre() {
 	cadreArr.push(['ES101X', ['校学生会主席', '校学生会副主席', '校团委常务副部长', '校艺术总团团长', '校社团联合会主席', '学部（学院）学生会主席',
 	                 		'学部（学院）团委常务副书记']]);
 	cadreArr.push(['ES102X', ['校学生会部长', '校团委副部长', '校社团联合会副主席', '校艺术总团副团长', '校艺术总团分团团长',
