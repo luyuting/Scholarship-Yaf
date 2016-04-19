@@ -1,0 +1,45 @@
+@CHARSET "UTF-8";
+#nav .flex-box {
+	justify-content: center;
+	display: flex;
+}
+
+#nav .flex-box>div {
+	flex: 0.25;
+	text-align: center;
+}
+
+#nav .flex-box>div span {
+	display: block;
+	margin: 5px auto;
+	width: 90px;
+	height: 90px;
+	line-height: 90px;
+	border-radius:50%;
+	background: #343466;
+	color: #fff;
+}
+
+#nav .flex-box>div span.default {
+}
+
+#nav .flex-box>div span.orange {
+	background: #f8dd81;
+	color: #000;
+}
+
+#nav .flex-box>div span.grey {
+	background: #c0c0c0;
+}
+
+#nav .flex-box>div span.blue {
+	background: #30abc1;
+}
+
+#nav .flex-box>div span.deep {
+	background: #0072ac;
+}
+
+#nav {
+	flex: 1;
+}

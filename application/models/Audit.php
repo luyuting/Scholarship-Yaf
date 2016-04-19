@@ -63,7 +63,7 @@
                 return false;
             }
             $item_sql = Impl_Item::getInstance();
-            $update_rs = $item_sql->auto(self::TABLE_AUDIT)->buildUpdate(['ap_state' => $state, 'ap_audit' => $id],
+            $update_rs = $item_sql->auto(Comm_T::TABLE_AUDIT)->buildUpdate(['ap_state' => $state, 'ap_audit' => $id],
                 ['ap_id' => $apply_id])->exec();
             return $update_rs[0] == 1? true: false;
         }
