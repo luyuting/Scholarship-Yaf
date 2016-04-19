@@ -75,7 +75,7 @@ function init() {
 		id : 'paper',
 		title : '学术论文',
 		tHead : ['文章名称', '发表级别', '发表时间', 'EI、SCI收录', '作者排序', '分数', '审核状态'],
-		tBody : ['ap_id', 'pa_name', 'pa_level', 'pa_time', 'ei_sci', 'pa_team_order', 'ap_score', 'ap_state'],
+		tBody : ['ap_id', 'pa_name', 'pa_level', 'pa_time', 'pa_ei_sci', 'pa_team_order', 'ap_score', 'ap_state'],
 		params : [{
 			name : 'name',
 			display : '论文题目',
@@ -122,7 +122,7 @@ function init() {
 		}, {
 			name : 'discuss_score',
 			display : '协商得分',
-			type : 'date',
+			type : 'input',
 			value : '2014级及以后需填写',
 			regex : /^\s*|\d+\.?\d*$/
 		}]
