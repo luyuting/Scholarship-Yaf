@@ -128,10 +128,10 @@ function applySet(options) {
 						for (var k in trVal) {
 							if (k.indexOf('ap_') == -1) {
 								name = k.substr(k.indexOf('_') + 1);
-								_applyForm.attr('apply_id', $(this).val()).find('[id$=' + name + ']').val(trVal[k]).trigger('change').end()
-									.find('button').eq(0).text('修改').on('click', _update);
+								_applyForm.find('[id$=' + name + ']').val(trVal[k]).trigger('change');
 							}
 						}
+						_applyForm.attr('apply_id', $(this).val()).find('button').eq(0).text('修改').unbind('click').bind('click', _update);
 					});
 				}
 			}
@@ -263,17 +263,18 @@ function applySet(options) {
 		for (var i = 0; i < len; i ++) {	
 			initParam(_params[i]);
 		}
-		_applyForm.append($('<button type="button"></button>').text('确认').on('click', function() {
-			console.log('hehe');
-		}))
-			.append($('<button type="button"></button>').text('取消'));
+		_applyForm.append($('<button type="button"></button>').text('确认').bind('click', _apply))
+			.append($('<button type="button"></button>').text('取消').on('click', function() {
+				_applyForm.empty();
+				_init();
+			}));
 		_div.append(_applyArea);
 	};
 	_init();
 	// test
 	
 	var _appendArea = $('div.apply_area');
-	if (!_appendArea) {
+	if (_appendArea.length == 0) {
 		$('<div></div>').addClass('apply_area');
 		$('body').append(_appendArea);
 	}
