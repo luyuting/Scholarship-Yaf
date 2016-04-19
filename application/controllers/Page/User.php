@@ -6,4 +6,8 @@
         public function loginAction() {
         
         }
+        
+        public function homeAction() {
+            
+        }
     }
