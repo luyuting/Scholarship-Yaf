@@ -22,6 +22,23 @@ function applySet(options) {
 	// del
 	var _del = function() {
 		var requestUri = _baseUri + 'del' + _id;
+		var after = function(times, callback) {
+			var count = 0;
+			return function() {
+				count ++;
+				if (count == times) {
+					callback();
+				}
+			};
+		};
+		var dels = $('#' + _id + ' tbody td').find('input[type="checkbox"]').filter('[checked="checked"]');
+		var done = after(dels.length, _get);
+		dels.each(function() {
+			$.post(requestUri, {apply_id : $(this).val()}, function(data, status) {
+				done();
+			}, 'json');
+		});
+		/*
 		$('#' + _id + ' tbody td').find('input[type="checkbox"]').each(function() {
 			if ($(this)[0].checked) {
 				$.post(requestUri, {apply_id : $(this).val()}, function(data, status) {
@@ -30,7 +47,7 @@ function applySet(options) {
 					}
 				}, 'json');
 			}
-		});
+		});*/
 	};
 	// apply
 	var _apply = function() {
@@ -61,9 +78,31 @@ function applySet(options) {
 	};
 	// update
 	var _update = function() {
+		var params = {};
+		var parLen = _applyParams.length;
+		for (var i = 0; i < parLen; i ++) {
+			var each = _applyParams[i];
+			var name = each['name'];
+			var regex = each['regex'];
+			var id = each['id'];
+			
+			var node = $('#' + id);
+			var val = node.val().trim();
+			if (!regex.test(val)) {
+				node.focus();
+				return false;
+			}
+			params[name] = val;
+		}
 		$.post(_baseUri + 'del' + _id, {apply_id : _applyForm.attr('apply_id')}, function(data, status) {
 			if (data.code == 10000) {
-				_apply();
+				$.post(_baseUri + 'apply' + _id, params, function(data, status) {
+					if (data.code == 10000) {
+						$('#' + _id + '_form').empty();
+						_get();
+						_init();
+					}
+				}, 'json');
 			}
 		}, 'json');
 		
@@ -167,7 +206,7 @@ function applySet(options) {
 						regex = /^\d{4}-\d{2}-\d{2}$/;
 						break;
 					case 'select' : 
-						var select = $('<select/>').attr('id', id);
+						var select = $('<select></select>').attr('id', id);
 						item.append(select);
 						for (var j = 0; j < value.length; j ++) {
 							var k = value[j]['k'] || value[j];
