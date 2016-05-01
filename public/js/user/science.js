@@ -124,7 +124,7 @@ function init() {
 			display : '协商得分',
 			type : 'input',
 			value : '2014级及以后需填写',
-			regex : /^\s*|\d+\.?\d*$/
+			regex : /^(\s*|\d+\.?\d*)$/
 		}]
 	});
 	// 专利发明

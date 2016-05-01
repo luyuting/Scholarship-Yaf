@@ -155,7 +155,7 @@
             $score_sql = Impl_Score::getInstance();
             $db = Base_Db::getInstance();
             // 3人以上视作团队，团队成员得分乘系数
-            if ($team_num >= 3) {
+            if ($team_num > 3) {
                 $params = $score_sql->scoreModel($scholar_type_id, '科技创新团队', $team_order, '');
                 $score_rs = $score_sql->buildQuery($params, [], [], ['its_score_ratio']);
                 $calc_sql .= '(' . $score_rs['sql'] . ')*';
@@ -206,8 +206,18 @@
             if (empty($rs[0])) {
                 return false;
             }
-            $item_score = $rs[0][0];
-            $score = (int) $item_score['its_score'];
+            $item_score = (int) $rs[0][0]['its_score'];
+            // 3人以上视作团队，团队成员得分乘系数
+            $team_ratio = 1;
+            if ($team_num > 3) {
+                $params = $score_sql->scoreModel($scholar_type_id, '科技创新团队', $team_order, '');
+                $rs = $score_sql->auto()->buildQuery($params)->exec();
+                if (empty($rs[0])) {
+                    return false;
+                }
+                $team_ratio = floatval($rs[0][0]['its_score_ratio']);
+            }
+            $score = $team_ratio * $item_score;
             return self::setApply($scholar_type_id, $student, Comm_T::TABLE_SCIE_TECH_PROJECT, $id, $score);
         }
         

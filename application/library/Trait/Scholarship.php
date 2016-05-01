@@ -14,12 +14,35 @@
             return Scholarship_BaseModel::getScholarNameByType(self::$_type);
         }
         
-        public static function getOrderByAdmin() {
-            
+        public static function getOrderByAdmin($admin_account) {
+            $scholar_type_id = Scholarship_BaseModel::getScholarId($admin_account, self::$type);
+            if ($scholar_type_id == 0) {
+                return [];
+            }
+            $item_sql = Impl_Item::getInstance();
+            $params = [
+                'ap_scho_type' => $scholar_type_id,
+                'ap_state' => '通过'
+            ];
+            $rs = $item_sql->tAuto(Comm_T::TABLE_APPLY)->buildQuery($params, [], ['ap_student' => 'asc'])->exec();
+            $data = $rs[0];
+            $score_data = [];
+            foreach (data as $info) {
+                !isset($score_data[$info['ap_student']]) && $score_data[$info['ap_student']] = 0;
+                $score_data[$info['ap_student']] += $info['ap_score'];
+            }
+            return $score_data;
         }
         
-        public static function getOrderByUser() {
-            
+        public static function getOrderByUser($user_id) {
+            $scholar_type_id = self::getScholarIdByUser($user_id);
+            if ($scholar_type_id == 0) {
+                return [];
+            }
+            $db = Base_Db::getInstance();
+            $sql = "select ";
+            $params = [$scholar_type_id];
+            return $db->query($sql, $params);
         }
           
         private static function getScholarIdByUser($user_id) {

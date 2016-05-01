@@ -5,7 +5,7 @@
 }
 
 #nav .flex-box>div {
-	flex: 0.25;
+	flex: 1;
 	text-align: center;
 }
 
@@ -15,7 +15,7 @@
 	width: 90px;
 	height: 90px;
 	line-height: 90px;
-	border-radius:50%;
+	border-radius: 50%;
 	background: #343466;
 	color: #fff;
 }

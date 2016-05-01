@@ -6,7 +6,7 @@ $(function() {
 	setting.push({id : 'study', display : '学习优秀', style : 'blue'});
 	setting.push({id : 'spiritual', display : '精神文明', style : 'grey'});
 	setting.push({id : 'work', display : '社会工作', style : 'deep'});
-	setting.push({id : 'activity', display : '文体活动', style : 'orange'});
+	setting.push({id : 'activity', display : '文体活动', style : 'deep'});
 	setting.push({id : 'science', display : '科技创新', style : 'orange'});
 	setting.push({id : 'practice', display : '社会实践', style : 'default'});
 	// setting.push({id : 'progress', display : '评审进度', style : 'blue'});
@@ -25,7 +25,7 @@ function initNav(setting) {
 	var _navSet = function(setting) {
 		var items = null;
 		for (var i = 0; i < setting.length; i ++) {
-			if (i % 4 == 0) {
+			if (i % 3 == 0) {
 				items = $('<div></div>').addClass('flex-box');
 				_nav.append(items);
 			}
