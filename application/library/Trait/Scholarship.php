@@ -15,7 +15,16 @@
         }
         
         public static function getOrderByAdmin($admin_account) {
-            $scholar_type_id = Scholarship_BaseModel::getScholarId($admin_account, self::$type);
+            $scholar_type_id = Scholarship_BaseModel::getScholarId($admin_account, self::$_type);
+            return self::getScholarOrder($scholar_type_id);
+        }
+        
+        public static function getOrderByUser($user_id) {
+            $scholar_type_id = self::getScholarIdByUser($user_id);
+            return self::getScholarOrder($scholar_type_id);
+        }
+        
+        private static function getScholarOrder($scholar_type_id) {
             if ($scholar_type_id == 0) {
                 return [];
             }
@@ -27,22 +36,12 @@
             $rs = $item_sql->tAuto(Comm_T::TABLE_APPLY)->buildQuery($params, [], ['ap_student' => 'asc'])->exec();
             $data = $rs[0];
             $score_data = [];
-            foreach (data as $info) {
+            foreach ($data as $info) {
                 !isset($score_data[$info['ap_student']]) && $score_data[$info['ap_student']] = 0;
                 $score_data[$info['ap_student']] += $info['ap_score'];
             }
+            arsort($score_data);
             return $score_data;
-        }
-        
-        public static function getOrderByUser($user_id) {
-            $scholar_type_id = self::getScholarIdByUser($user_id);
-            if ($scholar_type_id == 0) {
-                return [];
-            }
-            $db = Base_Db::getInstance();
-            $sql = "select ";
-            $params = [$scholar_type_id];
-            return $db->query($sql, $params);
         }
           
         private static function getScholarIdByUser($user_id) {
