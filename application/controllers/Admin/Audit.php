@@ -85,7 +85,7 @@
             $state = $req->getPost('state');
             $remark = $req->getPost('remark');
             if (!Comm_ArgsCheck::int($apply_id, 1) || !Comm_ArgsCheck::string($state) || 
-                !Comm_ArgsCheck::string($remark)) {
+                !Comm_ArgsCheck::string($remark, Comm_ArgsCheck::BASE_EMPTY_STR)) {
                 $this->error(Comm_Const::E_INVALID_PARAM);
                 return;
             }

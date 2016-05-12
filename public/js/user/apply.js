@@ -314,7 +314,7 @@ function applySet(options) {
 	
 	var _appendArea = $('div.apply_area');
 	if (_appendArea.length == 0) {
-		$('<div></div>').addClass('apply_area');
+		_appendArea = $('<div></div>').addClass('apply_area');
 		$('body').append(_appendArea);
 	}
 	$(_appendArea).append(_div);

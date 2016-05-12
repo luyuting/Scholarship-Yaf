@@ -54,7 +54,7 @@
         
         public static function auditScholar($apply_id, $admin_account, $state, $remark) {
             $info = AdminModel::getAdminInfoByAccount($admin_account);
-            $admin_id = $info['admin_id'];
+            $admin_id = $info['ad_id'];
             $audit_sql = Impl_Audit::getInstance();
             $model = $audit_sql->auditModel($apply_id, $admin_id, $state, $remark);
             $rs = $audit_sql->auto()->buildSave($model)->exec();
@@ -63,7 +63,7 @@
                 return false;
             }
             $item_sql = Impl_Item::getInstance();
-            $update_rs = $item_sql->auto(Comm_T::TABLE_AUDIT)->buildUpdate(['ap_state' => $state, 'ap_audit' => $id],
+            $update_rs = $item_sql->tAuto(Comm_T::TABLE_APPLY)->buildUpdate(['ap_state' => $state, 'ap_audit' => $id],
                 ['ap_id' => $apply_id])->exec();
             return $update_rs[0] == 1? true: false;
         }
