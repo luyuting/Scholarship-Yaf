@@ -52,4 +52,19 @@
         public static function getStudyUnique($student, $annual) {
             return self::getApply($student, $annual, Comm_T::TABLE_SCHOLARSHIP, 'sc_id');
         }
+        
+        public static function getAuditProgress($admin_account) {
+            $db = Base_Db::getInstance();
+            $sql = 'select sc_id from tb_scholarship where (sc_annual, sc_grade) in (select ad_annual,
+                ad_grade from tb_admin where ad_account = ?) and sc_type in (?, ?)';
+            $params = [$admin_account, Scholarship_BaseModel::SCHOLAR_STUDY_FIRST, Scholarship_BaseModel::SCHOLAR_STUDY_SECOND];
+            $rs = $db->query($sql, $params);
+            $params = [];
+            for ($i = 0; $i < 2; $i ++) {
+                $params[] = isset($rs[$i])? $rs[$i]['sc_id']: 0;
+            }
+            $sql = 'select ap_student student, count(*) uncount from tb_apply where ap_scho_type in (?, ?) 
+                and ap_audit = 0 group by student order by student asc';
+            return $db->query($sql, $params);
+        }
     }

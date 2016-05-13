@@ -6,6 +6,34 @@
             
         }
         
+        public static function getAuditProgress($admin_account) {
+            $scholar_type_id = Scholarship_BaseModel::getScholarId($admin_account, self::$_type);
+            if ($scholar_type_id == 0) {
+                return [];
+            }
+            $item_sql = Impl_Item::getInstance();
+            $params = [
+                'ap_scho_type' => $scholar_type_id,
+                'ap_audit' => 0
+            ];
+            $rs = $item_sql->tAuto(Comm_T::TABLE_APPLY)->buildQuery($params, [], ['ap_student' => 'asc'])->exec();
+            $data = $rs[0];
+            $count_data = [];
+            foreach ($data as $item) {
+                !isset($count_data[$item['ap_student']]) && $count_data[$item['ap_student']] = 0;
+                $count_data[$item['ap_student']] ++;
+            }
+            ksort($count_data);
+            $process_data = [];
+            foreach ($count_data as $k => $v) {
+                $process_data[] = [
+                    'student' => $k,
+                    'uncount' => $v
+                ];
+            }
+            return $process_data;
+        }
+        
         public static function getType() {
             return self::$_type;
         }
@@ -41,7 +69,21 @@
                 $score_data[$info['ap_student']] += $info['ap_score'];
             }
             arsort($score_data);
-            return $score_data;
+            // 排名设置
+            $rank_data = [];
+            $last = [];
+            $r = 1;
+            foreach ($score_data as $k => $v) {
+                $rank = !empty($last) && $last['score'] == $v? $last['rank']: $r;
+                $last = [
+                    'student' => $k,
+                    'score' => $v,
+                    'rank' => $rank
+                ];
+                $rank_data[] = $last;
+                $r ++;
+            }
+            return $rank_data;
         }
           
         private static function getScholarIdByUser($user_id) {
