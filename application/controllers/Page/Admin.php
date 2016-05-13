@@ -7,6 +7,10 @@
             
         }
         
+        public function mainAction() {
+            
+        }
+        
         public function homeAction() {
             $admin_account = $this->getAdmin();
             

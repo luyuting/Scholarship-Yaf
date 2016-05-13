@@ -37,7 +37,7 @@
         }
         
         public static function getPaperList($admin_account) {
-            return self::getList($admin_account, Comm_T::TABLE_PAPER, 'stp_id');
+            return self::getList($admin_account, Comm_T::TABLE_PAPER, 'pa_id');
         }
         
         public static function getInventionList($admin_account) {

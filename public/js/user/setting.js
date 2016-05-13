@@ -21,7 +21,7 @@ function initNav(setting) {
 		.append($('<span></span>').attr('id', 'home').text('回到首页').on('click', function() {
 			initNav(setting);
 		})).append($('<span></span>').attr('id', 'mine').text('我的信息'))
-		.append($('<span></span>').attr('id', 'logout').text('退出登录'));
+		.append($('<span></span>').attr('id', 'logout').append($('<a></a>').text('退出登录').attr('href', '/user_login/logout')));
 	var _navSet = function(setting) {
 		var items = null;
 		for (var i = 0; i < setting.length; i ++) {
@@ -34,7 +34,7 @@ function initNav(setting) {
 				.addClass(set.style || 'default').text(set.display)).attr('id', 'nav_' + set.id)
 				.on('click', function() {		
 					$('.page-title').text($(this).text());
-					$('#nav').empty().removeAttr('id').removeClass('container').addClass('apply_area');
+					$('#nav').empty().removeAttr('id').removeClass('container').addClass('apply-area');
 					$.getScript('/js/user/' + $(this).attr('id').split('_')[1] + '.js');
 				}));
 		}

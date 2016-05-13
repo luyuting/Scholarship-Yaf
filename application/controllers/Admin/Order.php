@@ -1,6 +1,11 @@
 <?php
     class Admin_OrderController extends Abstract_Controller_AjaxAd {
         
+        public function studyAction() {
+            $admin_account = $this->getAdmin();
+            $this->success([]);
+        }
+        
         public function spiritualAction() {
             $admin_account = $this->getAdmin();
             $info = Scholarship_SpiritualModel::getOrderByAdmin($admin_account);

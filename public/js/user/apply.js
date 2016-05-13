@@ -119,11 +119,11 @@ function applySet(options) {
 		var e = window.event || arguments.callee.caller.arguments[0];
 		var ele = e.srcElement || e.target;
 		var checkbox = $(this).find('input[type="checkbox"]')[0];
-		if(ele.type != 'checkbox') {
+		if (ele.type != 'checkbox') {
 			checkbox.checked = !checkbox.checked;
 		} 
 		$('#' + _id + ' tbody td').find('input[type="checkbox"]').each(function() {
-			$(this)[0].checked = checkbox.checked;
+			$(this).attr('checked', checkbox.checked);
 		});
 	}).append($('<input type="checkbox"/>')).append('全选').attr('title', '全选');
 	var _delete = $('<span></span>').addClass('table-operate').bind('click', _del).append($('<img src="/img/delete.png"/>')).append('删除').attr('title', '删除');
@@ -195,7 +195,7 @@ function applySet(options) {
 				var id = _id + '_' + name;
 				var item = $('<div></div>');
 				item.append($('<label></label>').text(display));
-				switch(type) {
+				switch (type) {
 					case 'input' :
 						item.append($('<input type="text"/>').attr('name', name).attr('id', id)
 							.attr('placeholder', value || ''));
@@ -312,9 +312,9 @@ function applySet(options) {
 	_init();
 	// test
 	
-	var _appendArea = $('div.apply_area');
+	var _appendArea = $('div.apply-area');
 	if (_appendArea.length == 0) {
-		_appendArea = $('<div></div>').addClass('apply_area');
+		_appendArea = $('<div></div>').addClass('apply-area');
 		$('body').append(_appendArea);
 	}
 	$(_appendArea).append(_div);

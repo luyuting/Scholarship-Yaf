@@ -30,4 +30,9 @@
             $this->success($info);
         }
         
+        public function logoutAction() {
+            $this->unsetUser();
+            $this->getResponse()->setRedirect('/page_user/login');
+        }
+        
     }

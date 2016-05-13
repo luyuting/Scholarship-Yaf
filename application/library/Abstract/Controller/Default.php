@@ -58,4 +58,9 @@
         protected final function getUser() {
             return $this->_login_user;
         }
+        
+        protected final function unsetUser() {
+            unset($_SESSION['sid']);
+            $this->_login_user = null;
+        }
     }

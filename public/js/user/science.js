@@ -102,7 +102,8 @@ function init() {
 			name : 'vol',
 			display : '卷号期号',
 			type : 'input',
-			value : '卷号期号'
+			value : '卷号期号',
+			required : false
 		}, {
 			name : 'time',
 			display : '出版时间',
