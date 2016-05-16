@@ -12,8 +12,25 @@
 	border-radius: 7px;
 }
 
-table tr td:nth-child(1) {
+table tr td:nth-child(1), table tr th:nth-child(1) {
 	width: 10px;
+}
+
+.apply-div >img {
+	width: 20px;
+	margin-top: 10px;
+}
+
+.apply-div >img:hover {
+	cursor: pointer;
+}
+
+.apply-div >span {
+	float: left;
+	padding: 0 12px;
+	display: inline-block;
+	height: 40px;
+	line-height: 40px;
 }
 
 .apply {

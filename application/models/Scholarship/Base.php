@@ -24,8 +24,8 @@
             $sql = 'select i.*, a.* from tb_scholarship i, tb_admin a where a.ad_id = i.sc_admin and   
                 (i.sc_annual, i.sc_grade) in (select ad_annual, ad_grade from tb_admin where ad_account = ?)';
             $params = [$admin_account];
-            $res = $db->query($sql, $params);
-            return self::packSetting($res);
+            $rs = $db->query($sql, $params);
+            return self::packSetting($rs);
         }
         
         public static function getBaseSetting($scholar_id) {     
@@ -33,8 +33,8 @@
             $sql = 'select i.*, a.* from tb_scholarship i, tb_admin a where a.ad_id = i.sc_admin
                 and i.sc_id = ?';
             $params = [$scholar_id];
-            $res = $db->query($sql, $params);
-            $info = self::packSetting($res);
+            $rs = $db->query($sql, $params);
+            $info = self::packSetting($rs);
             return empty($info)? []: $info[0];
         }
         
@@ -43,8 +43,8 @@
             $sql = 'select sc_id from tb_scholarship where (sc_annual, sc_grade) in (select ad_annual,
                 ad_grade from tb_admin where ad_account = ?) and sc_type = ? ';
             $params = [$admin_account, $type];
-            $res = $db->query($sql, $params);
-            return empty($res)? 0: (int) $res[0]['sc_id'];
+            $rs = $db->query($sql, $params);
+            return empty($rs)? 0: (int) $rs[0]['sc_id'];
         }
         
         public static function getScholarItemScore($admin_account, $name) {
@@ -53,23 +53,23 @@
                 (select ad_annual, ad_grade from tb_admin where ad_account = ? ) and sc_id = its_type and 
                 its_name = ? order by its_score desc, its_describe_a desc, its_score_ratio desc';
             $params = [$admin_account, $name];
-            $res = $db->query($sql, $params);
-            return $res;
+            $rs = $db->query($sql, $params);
+            return $rs;
         }
         
         public static function getScholarNameByType($type) {
-            $res = null;
+            $rs = null;
             switch ($type) {
-                case self::SCHOLAR_STUDY_FIRST: $res = '一等学习优秀奖学金'; break;
-                case self::SCHOLAR_STUDY_SECOND: $res = '二等学习优秀奖学金'; break;
-                case self::SCHOLAR_SPIRITUAL: $res = '精神文明奖学金'; break;
-                case self::SCHOLAR_ACTIVITY: $res = '文体活动奖学金'; break;
-                case self::SCHOLAR_WORK: $res = '社会工作奖学金'; break;
-                case self::SCHOLAR_SCIENCE; $res = '科技创新奖学金'; break;
-                case self::SCHOLAR_PRACTICE: $res = '社会实践奖学金'; break;
+                case self::SCHOLAR_STUDY_FIRST: $rs = '一等学习优秀奖学金'; break;
+                case self::SCHOLAR_STUDY_SECOND: $rs = '二等学习优秀奖学金'; break;
+                case self::SCHOLAR_SPIRITUAL: $rs = '精神文明奖学金'; break;
+                case self::SCHOLAR_ACTIVITY: $rs = '文体活动奖学金'; break;
+                case self::SCHOLAR_WORK: $rs = '社会工作奖学金'; break;
+                case self::SCHOLAR_SCIENCE; $rs = '科技创新奖学金'; break;
+                case self::SCHOLAR_PRACTICE: $rs = '社会实践奖学金'; break;
                 default: break;
             }
-            return $res;
+            return $rs;
         }
         
         public static function scoreParams($type, $name, $descr_a, $descr_b, $score, $ratio) {
@@ -101,10 +101,10 @@
             return $db->getId($sql, $params);
         }
         
-        private static function packSetting(array $res) {
+        private static function packSetting(array $rs) {
             $info = [];
-            if (!empty($res)) {
-                foreach ($res as $setting) {
+            if (!empty($rs)) {
+                foreach ($rs as $setting) {
                     $info[] = [
                         'scho_id' => $setting['sc_id'],
                         'scho_name' => $setting['sc_name'],

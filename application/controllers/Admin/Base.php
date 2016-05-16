@@ -136,6 +136,60 @@
             
         }
         
+        public function ruleAction() {
+            $data = [];
+            $content = [];
+            $fp = fopen(APP_PATH . '/static/ruletpl.txt', 'r');
+            if (is_resource($fp)) {
+                $lines = '';
+                while (($buffer = fgets($fp)) !== false) {
+                    $buffer = trim($buffer);
+                    // 跳过注释或空白行
+                    if (empty($buffer) || substr($buffer, 0, 1) == '#') {
+                        continue;
+                    }
+                    // 声明奖学金类型
+                    if (preg_match('/^\[(\\d)\]$/', $buffer, $matches) && isset($matches[1])) {
+                        if (!empty($lines)) {
+                            $content['data'] = $lines;
+                            $data[] = $content;
+                            $content = [];
+                            $lines = '';
+                        }
+                        
+                        $type = (int) $matches[1];
+                        $name = Scholarship_BaseModel::getScholarNameByType($type);
+                        $content = [
+                            'type' => $type,
+                            'name' => $name
+                        ];
+                    // 规则表
+                    } elseif (substr($buffer, 0, 1) == ':') {
+                        if (!empty($lines)) {
+                            $content['data'] = $lines;
+                            $data[] = $content;
+                            unset($content['data']);
+                            $lines = '';
+                        }
+                        
+                        $info = explode(';', substr($buffer, 1));
+                        $content['table'] = $info[0];
+                        $content['basic_info'] = $info[1];
+                    } else {
+                        $line = '<tr><td>' . $buffer . '</td></tr>';
+                        $line = str_replace(',', '</td><td>', $line);
+                        $lines .= $line;
+                    }
+                }
+                fclose($fp);
+            }
+            $this->success($data);
+        }
+        
+        public function scholarItemAction() {
+            $this->scholarItemCheck($this->getRequest()->getPost('type'));
+        }
+        
         private function scholarItemCheck($type) {
             if (!Comm_ArgsCheck::int($type, 1, 7)) {
                 $this->error(Comm_Const::E_INTERNAL);

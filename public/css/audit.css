@@ -4,7 +4,7 @@ body {
 	margin: 0 0 0 190px;	
 }
 
-table tr td:nth-child(1) {
+table tr td:nth-child(1), table tr th:nth-child(1) {
 	width: 10px;
 }
 
@@ -16,7 +16,7 @@ table tr td:nth-child(1) {
 .nav ul li {
 	display: inline-block;
 	background-color: #2092dd;
-	margin: 0 10px;
+	margin: 1px 10px;
 	padding: 10px;
 	color: #fff;
 	border-radius: 3px;
@@ -59,7 +59,6 @@ table tr td:nth-child(1) {
 	position: absolute;
 	height: calc(100% - 40px);
 	width: 170px;
-	background-color: #000;
 	left: 10px;
 	top: 10px;
 	padding: 10px 0;

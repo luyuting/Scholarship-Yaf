@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>奖学金系统审核</title>
+	<link rel="stylesheet" href="/css/base.css" />
+	<link rel="stylesheet" href="/css/rule.css" />
+	<script src="/js/comm/jquery-1.8.2.min.js"></script>
+	<script src="/js/admin/rule.js"></script>
+</head>
+<body>
+<div class="rule-edit">
+	<img src="../img/me.png" />
+	<div>
+		<label>名称</label>
+		<input type="text" id="scholar_name" readonly title="不允许编辑此项"/>
+	</div>
+	<div>
+		<label>描述1</label>
+		<input type="text" id="scholar_descr_a" readonly title="不允许编辑此项"/>
+	</div>
+	<div>
+		<label>描述2</label>
+		<input type="text" id="scholar_descr_b" readonly title="不允许编辑此项"/>
+	</div>
+		
+	<div>
+		<label>分数</label>
+		<input type="text" id="scholar_score" placeholder="默认是0"/>
+	</div>
+	<div>
+		<label>系数</label>
+		<input type="text" id="scholar_ratio" placeholder="默认是1"/>
+	</div>
+	<button type="button">确认</button>
+</div>
+<div class="rule-main">
+	<table class="rule-table" id="base-rule">
+		<thead>
+			<tr>
+				<th>序号</th>
+				<th>奖学金类型</th>
+				<th>规则类型</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+	<div class="operate-div">
+		<img src="/img/arrow.png"/><span class="table-operate" id="complete" title="完成添加"><img src="/img/complete.png">完成添加</span>
+	</div>
+</div>
+<div class="rule-sub">
+	<table class="rule-table" id="detail-rule">
+		<thead>
+			<tr>
+				<th>名称</th>
+				<th>描述1</th>
+				<th>描述2</th>
+				<th>分数</th>
+				<th>系数</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+	<div class="operate-div">
+		<img src="/img/arrow.png"/><span class="table-operate" id="tips" title="可编辑分数或系数">可编辑分数或系数</span>
+	</div>
+</div>
+</body>
+</html>

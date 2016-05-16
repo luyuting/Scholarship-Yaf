@@ -1,0 +1,72 @@
+@CHARSET "UTF-8";
+.rule-table td span {
+	vertical-align: middle;
+	color: #343466;
+	margin: 0 10px;
+}
+
+.rule-table td span:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.rule-edit, .rule-main, .rule-sub {
+	position: absolute;
+	padding: 10px 0;
+	border: 1px solid #e1e1e1;
+	-webkit-box-shadow: 0 0 3px #eee,inset 0 0 3px #fff;
+	box-shadow: 0 0 3px #eee,inset 0 0 3px #fff;
+	background: #fbfbfb;
+	border-radius: 7px;
+}
+
+.rule-edit input[readonly]:hover {
+	cursor: not-allowed;
+}
+
+.rule-edit input, .rule-edit button {
+	display: block;
+	margin: 0 auto;
+}
+
+.rule-edit input {
+	width: calc(100% - 46px);
+}
+
+.rule-edit button {
+	width: calc(100% - 20px);
+	margin-top: 30px;
+}
+
+.rule-edit img {
+	width: 100px;
+	display: block;
+	margin: 0 auto;
+}
+
+.rule-edit {
+	height: calc(100% - 40px);
+	width: 470px;
+	left: 10px;
+	top: 10px;
+}
+.rule-main {
+	height: calc(50% - 60px);
+	width: calc(100% - 502px);
+	right: 10px;
+	top: 10px;
+	overflow-y: scroll;
+}
+
+.rule-sub {
+	height: calc(50% - 12px);
+	width: calc(100% - 502px);
+	right: 10px;
+	bottom: 10px;
+	overflow-y: scroll;
+}
+
+table#detail-rule tr:hover {
+	cursor: pointer;
+	background-color: #f7f7a6;
+} 

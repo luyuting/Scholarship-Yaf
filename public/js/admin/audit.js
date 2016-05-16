@@ -152,10 +152,19 @@ function progressSet(options) {
 			if ($('#search-user').val().trim() != '' ) {
 				searchByUser(null, table);
 			}
+			/*
+			$(table).find('tr').find('td :not(:first)').click(function() {
+				var studentVal = $(this).siblings().find('input[type="checkbox"]').val();
+				if (studentVal == '无') {
+					return;
+				}
+				$('#search-user').val(studentVal);
+				$('.menu li :eq(1)').trigger('click');
+			});*/ 
+			// 以上做法在点击查询之后依旧无法起作用。
 		}, 'json');
 	}
 	var _div = $('<div></div>').attr('id', _id).addClass('progress-div');
-	// .append($('<span></span>').text(_title));
 	var _table = $('<table></table>');
 	var _thead = $('<thead></thead>');
 	var _tbody = $('<tbody></tbody>').attr('id', _id + '-progress-info');
@@ -191,13 +200,7 @@ function progressSet(options) {
 					var inp = $('<input type="checkbox"/>').attr('name', _id + '_operate').val(cols[_tBody[0]]);
 					td.append(inp);
 				} else {
-					td.val(cols[_tBody[0]]).text(cols[_tBody[i - 1]]).click(function() {
-						if ($(this).val() == '无') {
-							return;
-						}
-						$('#search-user').val($(this).val());
-						$('.menu li').eq(1).trigger('click');
-					});
+					td.text(cols[_tBody[i - 1]]);
 				}
 			}
 		}
@@ -214,7 +217,6 @@ function progressSet(options) {
 
 function orderSet(options) {
 	var _id = options['id'];
-	// var _title = options['title'];
 	var _tHead = ['学号', '分数', '排名'];
 	var _tBody = ['student', 'score', 'rank']
 	var _baseUri = '/admin_order/';
@@ -232,7 +234,6 @@ function orderSet(options) {
 		}, 'json');
 	};
 	var _div = $('<div></div>').attr('id', _id).addClass('order-div');
-		// .append($('<span></span>').text(_title));
 	var _table = $('<table></table>');
 	var _thead = $('<thead></thead>');
 	var _tbody = $('<tbody></tbody>').attr('id', _id + '-order-info');
@@ -269,7 +270,7 @@ function orderSet(options) {
 					var inp = $('<input type="checkbox"/>').attr('name', _id + '_operate').val(cols[_tBody[0]]);
 					td.append(inp);
 				} else {
-					td.val(cols[_tBody[0]]).text(cols[_tBody[i - 1]]);
+					td.text(cols[_tBody[i - 1]]);
 				}
 			}
 		}
@@ -378,19 +379,10 @@ function auditSet(options) {
 				tr.append(td);
 				if (i == 0) { 
 					var inp = $('<input type="checkbox"/>').attr('name', _id + '_operate').val(cols[_tBody[0]]);
-					td.append(inp);
+					var hidden = $('<input type="hidden"/>').val(JSON.stringify(bodyArr[k]));
+					td.append(inp).append(hidden);
 				} else {
-					td.val(cols[_tBody[0]]).text(cols[_tBody[i]]).click(function() {
-						var indexRow = $(this).parent().index();
-						var trVal = bodyArr[indexRow];
-						for (var k in trVal) {
-							if (k.indexOf('ap_') == -1) {
-								name = k.substr(k.indexOf('_') + 1);
-								// _applyForm.find('[id$=' + name + ']').val(trVal[k]).trigger('change');
-							}
-						}
-						// _applyForm.attr('apply_id', $(this).val()).find('button').eq(0).text('修改').unbind('click').bind('click', _update);
-					});
+					td.text(cols[_tBody[i]]);
 				}
 			}
 		}

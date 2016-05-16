@@ -11,6 +11,10 @@
             
         }
         
+        public function ruleAction() {
+            
+        }
+        
         public function homeAction() {
             $admin_account = $this->getAdmin();
             

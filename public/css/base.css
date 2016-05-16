@@ -197,23 +197,6 @@ td, th {
 	line-height: 1.428571429;
 }
 
-.apply-div >img {
-	width: 20px;
-	margin-top: 10px;
-}
-
-.apply-div >img:hover {
-	cursor: pointer;
-}
-
-.apply-div >span {
-	float: left;
-	padding: 0 12px;
-	display: inline-block;
-	height: 40px;
-	line-height: 40px;
-}
-
 .operate-div {
 	float: left;
 	width: calc(100% - 10px);
