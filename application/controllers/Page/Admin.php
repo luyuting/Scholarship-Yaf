@@ -11,8 +11,44 @@
             
         }
         
+        public function baseRuleAction() {
+            $admin_account = $this->getAdmin();
+            $info = AdminModel::getAdminInfoByAccount($admin_account);
+            $items = [
+                [Scholarship_BaseModel::SCHOLAR_STUDY_FIRST, 5],
+                [Scholarship_BaseModel::SCHOLAR_STUDY_SECOND, 20],
+                [Scholarship_BaseModel::SCHOLAR_SPIRITUAL, 10],
+                [Scholarship_BaseModel::SCHOLAR_ACTIVITY, 6],
+                [Scholarship_BaseModel::SCHOLAR_WORK, 4],
+                [Scholarship_BaseModel::SCHOLAR_SCIENCE, 4],
+                [Scholarship_BaseModel::SCHOLAR_PRACTICE, 6]
+            ];
+            $scholar_items = [];
+            foreach ($items as $item) {
+                $scholar_items[] = [
+                    'type' => $item[0],
+                    'name' => Scholarship_BaseModel::getScholarNameByType($item[0]),
+                    'ratio' => $item[1]
+                ];
+            }
+            $_token = Util_Secure::generateRandom();
+            $_SESSION['_token'] = $_token;
+            $card = [
+                'grade' => $info['ad_grade'], 
+                'scholar_items' => $scholar_items,
+                '_token' => $_token
+            ];
+            $this->getView()->assign($card);
+        }
+        
         public function ruleAction() {
-            
+            $_token = $this->getRequest()->getQuery('_token');
+            if (!isset($_SESSION['_token']) || $_token != $_SESSION['_token']) {
+                // $this->getResponse()->setHeader('HTTP/1.1', '400 Bad Request');
+                $this->getResponse()->setRedirect('baserule');
+                return;
+            }
+            unset($_SESSION['_token']);
         }
         
         public function homeAction() {

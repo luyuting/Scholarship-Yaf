@@ -1,4 +1,15 @@
 @CHARSET "UTF-8";
+
+.hidden {
+	display: none;
+}
+
+.rule-table td input {
+	text-align: center;
+	width: 3em;
+	padding: 0;
+}
+
 .rule-table td span {
 	vertical-align: middle;
 	color: #343466;
@@ -24,7 +35,7 @@
 	cursor: not-allowed;
 }
 
-.rule-edit input, .rule-edit button {
+.rule-edit input, .rule-edit button, .rule-edit select {
 	display: block;
 	margin: 0 auto;
 }
@@ -33,8 +44,11 @@
 	width: calc(100% - 46px);
 }
 
-.rule-edit button {
+.rule-edit button, .rule-edit select {
 	width: calc(100% - 20px);
+}
+
+.rule-edit button {
 	margin-top: 30px;
 }
 

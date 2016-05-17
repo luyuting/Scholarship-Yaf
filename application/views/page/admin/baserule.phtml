@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>奖学金基本设置</title>
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/rule.css" />
+</head>
+<body>
+<div class="rule-edit">
+	<img src="/img/me.png" />
+	<div>
+		<input type="hidden" id="_token" value="<?= $_token;?>"/>
+	</div>
+	<div>
+		<label>年级</label>
+		<input type="text" id="scholar_grade" readonly title="不允许编辑此项"/>
+	</div>
+	<div>
+		<label>学生总人数</label>
+		<input type="text" id="student_num" placeholder="1~" />
+	</div>
+	<button type="button">确认</button>
+</div>
+<div class="rule-main">
+	<table class="rule-table">
+		<thead>
+			<tr>
+				<th>序号</th>
+				<th>奖学金类型</th>
+				<th>获奖比例（%）</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+<?php
+foreach ($scholar_items as $item) :
+    echo <<<OUT
+    <tr>	
+		<td>{$item['type']}</td>
+		<td>{$item['name']}</td>
+		<td>{$item['ratio']}</td>
+		<td><span><img src="/img/edit.png"/>编辑</span><span class="hidden"><img src="/img/complete.png"/>完成</span></td>
+	</tr>
+OUT;
+endforeach;
+?>
+		</tbody>
+	</table>
+	<div class="operate-div">
+		<img src="/img/arrow.png"/><span class="table-operate" id="complete" title="完成添加"><img src="/img/complete.png">完成添加</span>
+	</div>
+</div>
+<div class="rule-sub">
+	<table class="rule-table">
+		<thead>
+			<tr>
+				<th>年级</th>
+				<th>级队总人数</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><?= $grade;?></td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="operate-div">
+		<img src="/img/arrow.png"/><span class="table-operate" title="左侧表单处编辑此项">左侧表单处编辑此项</span>
+	</div>
+</div>
+<script src="../js/comm/jquery-1.8.2.min.js"></script>
+<script src="../js/comm/base.js"></script>
+<script>
+$(function() {
+	var tds = $('.rule-sub tbody tr :eq(0) td');
+	scholar_grade.value = tds.eq(0).text();
+	
+	$('.rule-main td').find('span :eq(0)').click(function() {
+		var ratioTd = $(this).parent().prev();
+		ratioTd.html('<input type="text" maxlength=3 placeholder="' + ratioTd.text() + '"/>');
+		$(this).addClass('hidden').next().removeClass('hidden');
+	});
+	
+	$('.rule-main td').find('span :eq(1)').click(function() {
+		var ratioTd = $(this).parent().prev();
+		var inp = ratioTd.find('input');
+		ratioTd.html(inp.val().trim() || inp.attr('placeholder'));
+		$(this).addClass('hidden').prev().removeClass('hidden');
+	});
+	
+	var after = function(times, callback) {
+		var count = 0;
+		return function() {
+			count ++;
+			if (count == times) {
+				callback();
+			}
+		}
+	};
+	
+	$('#complete').click(function() {
+		$('.rule-main td').find('span :eq(1)').not('.hidden').trigger('click');
+		var stuNum = parseInt(tds.eq(1).text() || 0);
+		if (stuNum < 1) {
+			student_num.focus();
+			return false;
+		}
+		var paramTrs = $('.rule-main tr');
+		
+		var done = after(paramTrs.length, function() {
+			location.href = '/page_admin/rule?_token=' + _token.value;
+		});
+		
+		var scholarBase = function(paramTr) {
+			var paramTds = paramTr.find('td');
+			var params = {
+				scho_type : paramTds.eq(0).text(),
+				scho_ratio : paramTds.eq(2).text(),
+				student_num : stuNum
+			}
+			$.post('/admin_base/scholarbase', params, function() {
+				paramTr.css('background-color', '#f7f7a6');
+				done();
+			}, 'json');
+		}
+		
+		for (var i = 0; i < paramTrs.length; i ++) {
+			scholarBase(paramTrs.eq(i));
+		}
+		
+	});
+	
+	$('.rule-edit button').click(function() {
+		tds.eq(0).text(scholar_grade.value);
+		tds.eq(1).text(student_num.value);
+	});
+});
+</script>
+</body>
+</html>

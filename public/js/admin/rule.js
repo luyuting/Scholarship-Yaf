@@ -59,7 +59,7 @@ function ruleSet(ruleArr) {
 		}
 		var ratioArr = ratioStr.split('/');
 		return ratioArr.length == 1 ? parseFloat(ratioArr[0]) : parseFloat(ratioArr[0]) / parseFloat(ratioArr[1]);
-	}
+	};
 	
 	var after = function(times, callback) {
 		var count = 0;
