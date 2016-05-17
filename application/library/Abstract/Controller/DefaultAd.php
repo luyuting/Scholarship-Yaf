@@ -58,4 +58,9 @@
         protected final function getAdmin() {
             return $this->_login_admin;
         }
+        
+        protected final function unsetAdmin() {
+            unset($_SESSION['aid']);
+            $this->_login_admin = null;
+        }
     }

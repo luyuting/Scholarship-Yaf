@@ -8,6 +8,7 @@
 </head>
 <body>
 <div class="rule-edit">
+	<?php include_once 'back.html';?>
 	<img src="/img/me.png" />
 	<div>
 		<input type="hidden" id="_token" value="<?= $_token;?>"/>
@@ -36,12 +37,12 @@
 <?php
 foreach ($scholar_items as $item) :
     echo <<<OUT
-    <tr>	
-		<td>{$item['type']}</td>
-		<td>{$item['name']}</td>
-		<td>{$item['ratio']}</td>
+    <tr>
+        <td>{$item['type']}</td>
+        <td>{$item['name']}</td>
+        <td>{$item['ratio']}</td>
 		<td><span><img src="/img/edit.png"/>编辑</span><span class="hidden"><img src="/img/complete.png"/>完成</span></td>
-	</tr>
+    </tr>
 OUT;
 endforeach;
 ?>

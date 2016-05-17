@@ -2,12 +2,27 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>奖学金系统审核</title>
+	<title>管理员-首页</title>
 	<link rel="stylesheet" href="/css/base.css" />
-	<link rel="stylesheet" href="/css/audit.css" />
-	<script src="/js/comm/jquery-1.8.2.min.js"></script>
-	<script src="/js/admin/audit.js"></script>
+	<link rel="stylesheet" href="/css/main.css" />
 </head>
 <body>
+	<div class="flex-container">
+		<div class="page-title container">Scholarship for Admin, Home Page<br>奖学金系统，管理员首页</div>
+    	<div class="flex-box">
+    		<span class="shade"><a href="/page_admin/baserule">Scholarship Base Setting<br>基本设置</a></span>
+        	<!-- <span class="shallow"><a href="/page_admin/rule">Rules Setting<br>规则设置</a></span>  -->
+        	<span class="shallow"><a href="#">Remain Module<br>保留模块</a></span>
+        	<span class="middle"><a href="#">Self Information Management<br>个人信息管理</a></span>
+        </div>
+        <div class="flex-box">
+    		<span class="shallow"><a href="/page_admin/audit">Audit Module<br>评审</a></span>
+        </div>
+        <div class="flex-box">
+    		<span class="default"><a href="/admin_base/logout">Logout<br>退出登录</a></span>
+        	<span class="deep"><a href="#">Change Password<br>修改密码</a></span>
+        	<span class="shade"><a href="#">Remain Module<br>保留模块</a></span>
+        </div>
+	</div>
 </body>
 </html>

@@ -25,6 +25,11 @@
             $this->success($info);
         }
         
+        public function logoutAction() {
+            $this->unsetAdmin();
+            $this->getResponse()->setRedirect('/page_admin/login');
+        }
+        
         public function scholarBaseAction() {
             $req = $this->getRequest();
             $scholar_type = $req->getPost('scho_type');
