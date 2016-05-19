@@ -54,7 +54,7 @@
             }
             unset($_SESSION['_token']);
         }
-        
+        /*
         public function homeAction() {
             $admin_account = $this->getAdmin();
             
@@ -75,9 +75,5 @@
                 'admin_authority' => $admin_authority
             ];
             $this->getView()->assign($card);
-        }
-        
-        public function settingAction() {
-            
-        }       
+        }*/     
     }
