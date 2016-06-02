@@ -10,6 +10,7 @@
             if (!Comm_ArgsCheck::string($admin_account) || !Comm_ArgsCheck::string($admin_pass,
                     Comm_ArgsCheck::USER_PASS)) {
                 $this->error(Comm_Const::E_INVALID_PARAM);
+                return;
             }
             $info = AdminModel::getAdminInfoByAccount($admin_account);
             if (empty($info)) {
